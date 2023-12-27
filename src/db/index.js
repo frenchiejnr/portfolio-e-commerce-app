@@ -66,6 +66,21 @@ const updateUser = (request, response) => {
   );
 };
 
+const deleteUser = (request, response) => {
+  const id = parseInt(request.params.id);
+
+  pool.query(
+    `DELETE FROM "user" WHERE user_id = $1`,
+    [id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).send(`User deleted with ID : ${id}`);
+    }
+  );
+};
+
 const allTables = (request, response) => {
   pool.query(
     "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'",
@@ -87,4 +102,5 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
+  deleteUser,
 };

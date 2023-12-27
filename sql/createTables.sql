@@ -44,24 +44,25 @@ CREATE TABLE Checkout (
     PRIMARY KEY (checkout_id)
 );
 CREATE TABLE Checkout_Order (
-    checkout_id INT NOT NULL REFERENCES checkout,
-    order_id INT NOT NULL REFERENCES "order"
+    checkout_id INT NOT NULL REFERENCES checkout ON DELETE CASCADE, 
+    order_id INT NOT NULL REFERENCES "order" ON DELETE CASCADE
 );
 CREATE TABLE Checkout_Cart (
-    checkout_id INT NOT NULL REFERENCES checkout,
-    cart_id INT NOT NULL REFERENCES cart
+    
+    checkout_id INT NOT NULL REFERENCES checkout ON DELETE CASCADE,
+    cart_id INT NOT NULL REFERENCES cart ON DELETE CASCADE
 );
 CREATE TABLE User_Cart (
-    user_id INT NOT NULL REFERENCES "user",
-    cart_id INT NOT NULL REFERENCES cart
+    user_id INT NOT NULL REFERENCES "user" ON DELETE CASCADE,
+    cart_id INT NOT NULL REFERENCES cart ON DELETE CASCADE
 );
 CREATE TABLE Cart_CartItem (
-    cart_id INT NOT NULL REFERENCES cart,
-    cart_item_id INT NOT NULL REFERENCES cart_item
+    cart_id INT NOT NULL REFERENCES cart ON DELETE CASCADE,
+    cart_item_id INT NOT NULL REFERENCES cart_item ON DELETE CASCADE
 );
 CREATE TABLE Product_CartItem (
-    product_id INT NOT NULL REFERENCES product,
-    cart_item_id INT NOT NULL REFERENCES cart_item
+    product_id INT NOT NULL REFERENCES product ON DELETE CASCADE,
+    cart_item_id INT NOT NULL REFERENCES cart_item ON DELETE CASCADE
 );
 \i product.sql
 \i order.sql
