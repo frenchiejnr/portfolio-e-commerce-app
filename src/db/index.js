@@ -21,7 +21,7 @@ const getUsers = (request, response) => {
 
 const getUserById = (request, response) => {
   const id = parseInt(request.params.id);
-  console.log(id);
+
   pool.query(
     `SELECT * FROM "user" WHERE user_id = $1`,
     [id],
@@ -30,6 +30,22 @@ const getUserById = (request, response) => {
         throw error;
       }
       response.status(200).json(results.rows);
+    }
+  );
+};
+
+const createUser = (request, response) => {
+  const { username, password, email, address } = request.body;
+  console.log(request.body);
+
+  pool.query(
+    `INSERT INTO "user" (username, password, email, address) VALUES ($1,$2,$3,$4)`,
+    [username, password, email, address],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(201).send(`User added`);
     }
   );
 };
@@ -53,4 +69,5 @@ module.exports = {
   getUsers,
   allTables,
   getUserById,
+  createUser,
 };

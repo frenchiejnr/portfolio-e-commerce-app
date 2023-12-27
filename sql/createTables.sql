@@ -1,7 +1,7 @@
 drop schema public cascade;
 create schema public;
 CREATE TABLE Product (
-    product_id INT NOT NULL UNIQUE,
+    product_id SERIAL NOT NULL UNIQUE,
     name varchar(50) NOT NULL,
     description varchar(500) NOT NULL,
     price DECIMAL(6, 2) NOT NULL,
@@ -10,14 +10,14 @@ CREATE TABLE Product (
     PRIMARY KEY (product_id)
 );
 CREATE TABLE "order" (
-    order_id INT NOT NULL UNIQUE,
+    order_id SERIAL NOT NULL UNIQUE,
     order_date TIMESTAMP NOT NULL,
     status VARCHAR(50) NOT NULL CHECK (status IN ('pending', 'processing', 'fulfilled')),
     tracking_number INT NOT NULL UNIQUE,
     PRIMARY KEY (order_id)
 );
 CREATE TABLE "user" (
-    user_id INT NOT NULL,
+    user_id SERIAL NOT NULL,
     username VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -25,19 +25,19 @@ CREATE TABLE "user" (
     PRIMARY KEY (user_id)
 );
 CREATE TABLE Cart (
-    cart_id INT NOT NULL,
+    cart_id SERIAL NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     PRIMARY KEY (cart_id)
 );
 CREATE TABLE Cart_Item (
-    cart_item_id INT NOT NULL,
+    cart_item_id SERIAL NOT NULL,
     quantity INT NOT NULL,
     added_at TIMESTAMP NOT NULL,
     PRIMARY KEY (cart_item_id)
 );
 CREATE TABLE Checkout (
-    checkout_id INT NOT NULL,
+    checkout_id SERIAL NOT NULL,
     payment_method VARCHAR(100) NOT NULL,
     shipping_address VARCHAR(1000) NOT NULL,
     total_amount INT NOT NULL,

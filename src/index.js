@@ -4,6 +4,8 @@ const app = express();
 
 const PORT = 4001;
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
@@ -14,4 +16,5 @@ app.listen(PORT, () => {
 
 app.get("/users", db.getUsers);
 app.get("/users/:id", db.getUserById);
+app.post("/users", db.createUser);
 app.get("/tables", db.allTables);
