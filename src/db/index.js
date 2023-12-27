@@ -1,4 +1,5 @@
 const dotenv = require("dotenv");
+const { response } = require("express");
 dotenv.config();
 
 const Pool = require("pg").Pool;
@@ -36,7 +37,6 @@ const getUserById = (request, response) => {
 
 const createUser = (request, response) => {
   const { username, password, email, address } = request.body;
-  console.log(request.body);
 
   pool.query(
     `INSERT INTO "user" (username, password, email, address) VALUES ($1,$2,$3,$4)`,
@@ -46,6 +46,22 @@ const createUser = (request, response) => {
         throw error;
       }
       response.status(201).send(`User added`);
+    }
+  );
+};
+
+const updateUser = (request, response) => {
+  const id = parseInt(request.params.id);
+  const { username, password, email, address } = request.body;
+
+  pool.query(
+    `UPDATE "user" SET username = $1, password = $2, email = $3, address = $4 WHERE user_id = $5`,
+    [username, password, email, address, id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).send(`User modified with ID : ${id}`);
     }
   );
 };
@@ -70,4 +86,5 @@ module.exports = {
   allTables,
   getUserById,
   createUser,
+  updateUser,
 };
