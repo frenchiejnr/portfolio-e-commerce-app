@@ -51,6 +51,7 @@ const createUser = (request, response) => {
 };
 
 const updateUser = (request, response) => {
+  // TODO: CHANGE A SINGLE FIELD
   const id = parseInt(request.params.id);
   const { username, password, email, address } = request.body;
 

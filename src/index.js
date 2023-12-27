@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("./db/index");
 const app = express();
+const userRouter = require("./routes/users");
 
 const PORT = 4001;
 
@@ -13,10 +14,6 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
+app.use("/users", userRouter);
 
-app.get("/users", db.getUsers);
-app.get("/users/:id", db.getUserById);
-app.post("/users", db.createUser);
-app.put("/users/:id", db.updateUser);
-app.delete("/users/:id", db.deleteUser);
 app.get("/tables", db.allTables);
