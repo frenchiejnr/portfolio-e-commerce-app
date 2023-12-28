@@ -1,6 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
-const db = require("../db/index");
+const db = require("../db/users");
 
 userRouter.get("/", db.getUsers);
 userRouter.get("/:id", db.getUserById);
