@@ -5,7 +5,7 @@ const db = require("../db/index");
 productRouter.get("/", db.getProducts);
 productRouter.get("/:id", db.getProductById);
 productRouter.post("/", db.createProduct);
-// productRouter.put("/:id", );
+productRouter.put("/:id", db.updateProduct);
 // productRouter.delete("/:id", );
 
 module.exports = productRouter;

@@ -127,6 +127,22 @@ const createProduct = (request, response) => {
     }
   );
 };
+const updateProduct = (request, response) => {
+  // TODO: CHANGE A SINGLE FIELD
+  const id = parseInt(request.params.id);
+  const { name, description, price, stock_level, image_url } = request.body;
+
+  pool.query(
+    `UPDATE product SET name = $1, description = $2, price = $3, stock_level = $4, image_url= $5 WHERE product_id = $6`,
+    [name, description, price, stock_level, image_url, id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).send(`Product modified with ID : ${id}`);
+    }
+  );
+};
 
 const allTables = (request, response) => {
   pool.query(
@@ -153,4 +169,5 @@ module.exports = {
   getProducts,
   getProductById,
   createProduct,
+  updateProduct,
 };
