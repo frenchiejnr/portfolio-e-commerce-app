@@ -109,6 +109,25 @@ const getProductById = (request, response) => {
   );
 };
 
+const createProduct = (request, response) => {
+  const { name, description, price, stock_level, image_url } = request.body;
+
+  pool.query(
+    `INSERT INTO product (name,
+        description,
+        price,
+        stock_level,
+        image_url) VALUES ($1,$2,$3,$4, $5)`,
+    [name, description, price, stock_level, image_url],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(201).send(`Product added`);
+    }
+  );
+};
+
 const allTables = (request, response) => {
   pool.query(
     "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'",
@@ -133,4 +152,5 @@ module.exports = {
   deleteUser,
   getProducts,
   getProductById,
+  createProduct,
 };
