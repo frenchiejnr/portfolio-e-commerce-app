@@ -1,4 +1,4 @@
-const { pool } = require(".");
+const { pool } = require("./index");
 
 const getProducts = (request, response) => {
   pool.query(

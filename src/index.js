@@ -1,8 +1,10 @@
 const express = require("express");
 const db = require("./db/index");
 const app = express();
+
 const userRouter = require("./routes/users");
 const productRouter = require("./routes/products");
+const orderRouter = require("./routes/orders");
 
 const PORT = 4001;
 
@@ -17,5 +19,6 @@ app.listen(PORT, () => {
 });
 app.use("/users", userRouter);
 app.use("/products", productRouter);
+app.use("/orders", orderRouter);
 
 app.get("/tables", db.allTables);
