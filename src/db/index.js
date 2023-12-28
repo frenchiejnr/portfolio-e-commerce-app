@@ -82,6 +82,18 @@ const deleteUser = (request, response) => {
   );
 };
 
+const getProducts = (request, response) => {
+  pool.query(
+    `SELECT * FROM product ORDER BY product_id ASC`,
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows);
+    }
+  );
+};
+
 const allTables = (request, response) => {
   pool.query(
     "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'",
@@ -104,4 +116,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  getProducts,
 };
