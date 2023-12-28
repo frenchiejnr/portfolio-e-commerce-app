@@ -94,6 +94,21 @@ const getProducts = (request, response) => {
   );
 };
 
+const getProductById = (request, response) => {
+  const id = parseInt(request.params.id);
+
+  pool.query(
+    `SELECT * FROM product WHERE product_id = $1`,
+    [id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows);
+    }
+  );
+};
+
 const allTables = (request, response) => {
   pool.query(
     "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'",
@@ -117,4 +132,5 @@ module.exports = {
   updateUser,
   deleteUser,
   getProducts,
+  getProductById,
 };

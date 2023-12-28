@@ -3,7 +3,7 @@ const productRouter = express.Router();
 const db = require("../db/index");
 
 productRouter.get("/", db.getProducts);
-// productRouter.get("/:id", );
+productRouter.get("/:id", db.getProductById);
 // productRouter.post("/", );
 // productRouter.put("/:id", );
 // productRouter.delete("/:id", );
