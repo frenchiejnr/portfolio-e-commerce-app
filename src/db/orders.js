@@ -25,19 +25,42 @@ const getOrderById = (request, response) => {
     }
   );
 };
-const createOrder = (request, response) => {
-  const { order_date, status, tracking_number } = request.body;
+const createOrder = async (request, response) => {
+  const { order_date, status, tracking_number, user_id } = request.body;
+  const client = await pool.connect();
+  try {
+    await client.query(`BEGIN`);
+    const queryText = `INSERT INTO "order" (order_date, status, tracking_number) VALUES ($1,$2,$3) RETURNING order_id`;
+    const res = await client.query(queryText, [
+      order_date,
+      status,
+      tracking_number,
+    ]);
+    console.log(res.rows);
 
-  pool.query(
-    `INSERT INTO "order" (order_date, status, tracking_number) VALUES ($1,$2,$3)`,
-    [order_date, status, tracking_number],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
-      response.status(201).send(`Order added`);
-    }
-  );
+    const insertJoiningTableText = `INSERT INTO User_Order (user_id, order_id) VALUES ($1, $2)`;
+    await client.query(insertJoiningTableText, [user_id, res.rows[0].order_id]);
+    await client.query("COMMIT");
+    response.status(201).send(`Order added`);
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+
+  //   pool.query(
+  //     `WITH ins1 AS (INSERT INTO "order" (order_date, status, tracking_number) VALUES ($1,$2,$3) RETURNING order_id),
+  //     ins2 AS (INSERT INTO User_Order (user_id, order_id) VALUES ($4, order_id FROM ins1)
+  //     SELECT order_id FROM ins1)`,
+  //     [order_date, status, tracking_number, user_id],
+  //     (error, results) => {
+  //       if (error) {
+  //         throw error;
+  //       }
+  //       response.status(201).send(`Order added`);
+  //     }
+  //   );
 };
 const updateOrder = (request, response) => {
   // TODO: CHANGE A SINGLE FIELD
