@@ -48,20 +48,8 @@ const createOrder = async (request, response) => {
   } finally {
     client.release();
   }
-
-  //   pool.query(
-  //     `WITH ins1 AS (INSERT INTO "order" (order_date, status, tracking_number) VALUES ($1,$2,$3) RETURNING order_id),
-  //     ins2 AS (INSERT INTO User_Order (user_id, order_id) VALUES ($4, order_id FROM ins1)
-  //     SELECT order_id FROM ins1)`,
-  //     [order_date, status, tracking_number, user_id],
-  //     (error, results) => {
-  //       if (error) {
-  //         throw error;
-  //       }
-  //       response.status(201).send(`Order added`);
-  //     }
-  //   );
 };
+
 const updateOrder = (request, response) => {
   // TODO: CHANGE A SINGLE FIELD
   const id = parseInt(request.params.id);
