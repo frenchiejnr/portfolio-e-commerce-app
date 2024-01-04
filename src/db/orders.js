@@ -26,7 +26,8 @@ const getOrderById = (request, response) => {
   );
 };
 const createOrder = async (request, response) => {
-  const { order_date, status, tracking_number, user_id } = request.body;
+  const { order_date, status, tracking_number, user_id, checkout_id } =
+    request.body;
   const client = await pool.connect();
   try {
     await client.query(`BEGIN`);
@@ -38,8 +39,13 @@ const createOrder = async (request, response) => {
     ]);
     console.log(res.rows);
 
-    const insertJoiningTableText = `INSERT INTO User_Order (user_id, order_id) VALUES ($1, $2)`;
-    await client.query(insertJoiningTableText, [user_id, res.rows[0].order_id]);
+    const insertIntoUserOrder = `INSERT INTO User_Order (user_id, order_id) VALUES ($1, $2)`;
+    await client.query(insertIntoUserOrder, [user_id, res.rows[0].order_id]);
+    const insertIntoCheckoutOrder = `INSERT INTO checkout_order (checkout_id, order_id) VALUES ($1, $2)`;
+    await client.query(insertIntoCheckoutOrder, [
+      checkout_id,
+      res.rows[0].order_id,
+    ]);
     await client.query("COMMIT");
     response.status(201).send(`Order added`);
   } catch (e) {
