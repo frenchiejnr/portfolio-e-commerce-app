@@ -66,8 +66,8 @@ CREATE TABLE Product_CartItem (
 );
 CREATE TABLE User_Order (
     user_id INT NOT NULL REFERENCES "user" ON DELETE CASCADE,
-    order_id INT NOT NULL REFERENCES "order" ON DELETE CASCADE,
-)
+    order_id INT NOT NULL REFERENCES "order" ON DELETE CASCADE
+);
 \i product.sql
 \i order.sql
 \i user.sql
