@@ -27,7 +27,7 @@ const getCartItemById = (request, response) => {
 };
 
 const createCartItem = async (request, response) => {
-  const { quantity, added_at, product_id } = request.body;
+  const { quantity, added_at, product_id, cart_id } = request.body;
   const client = await pool.connect();
   try {
     await client.query(`BEGIN`);
@@ -40,6 +40,12 @@ const createCartItem = async (request, response) => {
       product_id,
       res.rows[0].cart_item_id,
     ]);
+    const insertIntoCartCartItem = `INSERT INTO cart_cartitem (cart_id, cart_item_id) VALUES ($1, $2)`;
+    await client.query(insertIntoCartCartItem, [
+      cart_id,
+      res.rows[0].cart_item_id,
+    ]);
+
     await client.query("COMMIT");
     response.status(201).send(`CartItem added`);
   } catch (e) {
