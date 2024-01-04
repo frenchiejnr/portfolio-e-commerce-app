@@ -40,7 +40,7 @@ CREATE TABLE Checkout (
     checkout_id SERIAL NOT NULL,
     payment_method VARCHAR(100) NOT NULL,
     shipping_address VARCHAR(1000) NOT NULL,
-    total_amount INT NOT NULL,
+    total_amount DECIMAL(6, 2) NOT NULL,
     PRIMARY KEY (checkout_id)
 );
 CREATE TABLE Checkout_Order (
