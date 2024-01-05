@@ -67,10 +67,49 @@ const deleteUser = (request, response) => {
   );
 };
 
+const getUserOrders = (request, response) => {
+  const id = parseInt(request.params.id);
+
+  pool.query(
+    `SELECT user_id, order_id
+FROM user_order
+WHERE user_id = $1`,
+    [id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows);
+    }
+  );
+};
+
+const getUserOrder = (request, response) => {
+  const id = parseInt(request.params.id);
+  const order_id = parseInt(request.params.order_id);
+
+  pool.query(
+    `SELECT "order".order_id,	order_date,	status,	tracking_number
+FROM user_order
+JOIN "order"
+ON user_order.order_id = "order".order_id
+WHERE user_id = $1 AND "order".order_id = $2;`,
+    [id, order_id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows);
+    }
+  );
+};
+
 module.exports = {
   getUsers,
   getUserById,
   createUser,
   updateUser,
   deleteUser,
+  getUserOrders,
+  getUserOrder,
 };
