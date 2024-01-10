@@ -3,12 +3,13 @@ const { pool } = require("./index");
 const getUsers = (request, response) => {
   pool.query(`SELECT * FROM "user" ORDER BY user_id ASC`, (error, results) => {
     if (error) {
+      response.status(500);
       throw error;
     }
     response.status(200).json(results.rows);
   });
 };
-const getUserById = (request, response) => {
+const getUserById = async (request, response) => {
   const id = parseInt(request.params.id);
 
   pool.query(
@@ -16,6 +17,7 @@ const getUserById = (request, response) => {
     [id],
     (error, results) => {
       if (error) {
+        response.status(500);
         throw error;
       }
       response.status(200).json(results.rows);
@@ -30,6 +32,7 @@ const createUser = (request, response) => {
     [username, password, email, address],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "User Registration Failed" });
         throw error;
       }
       response.status(201).send(`User added`);
@@ -46,6 +49,7 @@ const updateUser = (request, response) => {
     [username, password, email, address, id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "User Update Failed" });
         throw error;
       }
       response.status(200).send(`User modified with ID : ${id}`);
@@ -60,6 +64,7 @@ const deleteUser = (request, response) => {
     [id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "User Delete Failed" });
         throw error;
       }
       response.status(200).send(`User deleted with ID : ${id}`);
@@ -77,6 +82,7 @@ WHERE user_id = $1`,
     [id],
     (error, results) => {
       if (error) {
+        response.status(500);
         throw error;
       }
       response.status(200).json(results.rows);
@@ -97,11 +103,28 @@ WHERE user_id = $1 AND "order".order_id = $2;`,
     [id, order_id],
     (error, results) => {
       if (error) {
+        response.status(500);
         throw error;
       }
       response.status(200).json(results.rows);
     }
   );
+};
+const findUserByUsername = async (username) => {
+  try {
+    const statement = `SELECT * 
+      FROM "user" 
+      WHERE username = $1`;
+    const values = [username];
+
+    const result = await pool.query(statement, values);
+    if (result.rows?.length) {
+      return result.rows[0];
+    }
+    return null;
+  } catch (error) {
+    throw new Error(err);
+  }
 };
 
 module.exports = {
@@ -112,4 +135,5 @@ module.exports = {
   deleteUser,
   getUserOrders,
   getUserOrder,
+  findUserByUsername,
 };

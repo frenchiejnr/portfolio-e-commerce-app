@@ -3,6 +3,7 @@ const { pool } = require("./index");
 const getCarts = (request, response) => {
   pool.query(`SELECT * FROM cart ORDER BY cart_id ASC`, (error, results) => {
     if (error) {
+      response.status(500).json({ msg: "Failed to get carts" });
       throw error;
     }
     response.status(200).json(results.rows);
@@ -16,6 +17,7 @@ const getCartById = (request, response) => {
     [id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to get cart" });
         throw error;
       }
       response.status(200).json(results.rows);
@@ -38,6 +40,7 @@ const createCart = async (request, response) => {
     response.status(201).send(`Cart added`);
   } catch (e) {
     await client.query("ROLLBACK");
+    response.status(500).json({ msg: "Failed to add cart" });
     throw e;
   } finally {
     client.release();
@@ -53,6 +56,7 @@ const updateCart = (request, response) => {
     [created_at, updated_at, id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to update cart" });
         throw error;
       }
       response.status(200).send(`Cart modified with ID : ${id}`);
@@ -64,6 +68,7 @@ const deleteCart = (request, response) => {
 
   pool.query(`DELETE FROM cart WHERE cart_id = $1`, [id], (error, results) => {
     if (error) {
+      response.status(500).json({ msg: "Failed to delete cart" });
       throw error;
     }
     response.status(200).send(`Cart deleted with ID : ${id}`);

@@ -5,6 +5,7 @@ const getCartItems = (request, response) => {
     `SELECT * FROM cart_item ORDER BY cart_item_id ASC`,
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to get cart_items" });
         throw error;
       }
       response.status(200).json(results.rows);
@@ -19,6 +20,8 @@ const getCartItemById = (request, response) => {
     [id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to get cart_item" });
+
         throw error;
       }
       response.status(200).json(results.rows);
@@ -50,6 +53,8 @@ const createCartItem = async (request, response) => {
     response.status(201).send(`CartItem added`);
   } catch (e) {
     await client.query("ROLLBACK");
+    response.status(500).json({ msg: "Failed to add cart_item" });
+
     throw e;
   } finally {
     client.release();
@@ -65,6 +70,8 @@ const updateCartItem = (request, response) => {
     [quantity, added_at, id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to update cart_item" });
+
         throw error;
       }
       response.status(200).send(`CartItem modified with ID : ${id}`);
@@ -79,6 +86,8 @@ const deleteCartItem = (request, response) => {
     [id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to delete cart_item" });
+
         throw error;
       }
       response.status(200).send(`CartItem deleted with ID : ${id}`);

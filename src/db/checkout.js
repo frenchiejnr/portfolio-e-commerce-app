@@ -5,6 +5,7 @@ const getCheckouts = (request, response) => {
     `SELECT * FROM checkout ORDER BY checkout_id ASC`,
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to get checkouts" });
         throw error;
       }
       response.status(200).json(results.rows);
@@ -19,6 +20,8 @@ const getCheckoutById = (request, response) => {
     [id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to get checkout" });
+
         throw error;
       }
       response.status(200).json(results.rows);
@@ -54,6 +57,7 @@ const createCheckout = async (request, response) => {
     response.status(201).send(`Checkout added`);
   } catch (e) {
     await client.query("ROLLBACK");
+    response.status(500).json({ msg: "Failed to create checkout" });
     throw e;
   } finally {
     client.release();
@@ -69,6 +73,7 @@ const updateCheckout = (request, response) => {
     [payment_method, shipping_address, total_amount, id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to update checkout" });
         throw error;
       }
       response.status(200).send(`Checkout modified with ID : ${id}`);
@@ -83,6 +88,7 @@ const deleteCheckout = (request, response) => {
     [id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to delete checkout" });
         throw error;
       }
       response.status(200).send(`Checkout deleted with ID : ${id}`);

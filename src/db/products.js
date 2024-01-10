@@ -5,6 +5,7 @@ const getProducts = (request, response) => {
     `SELECT * FROM product ORDER BY product_id ASC`,
     (error, results) => {
       if (error) {
+        response.status(500);
         throw error;
       }
       response.status(200).json(results.rows);
@@ -19,6 +20,7 @@ const getProductById = (request, response) => {
     [id],
     (error, results) => {
       if (error) {
+        response.status(500);
         throw error;
       }
       response.status(200).json(results.rows);
@@ -37,6 +39,8 @@ const createProduct = (request, response) => {
     [name, description, price, stock_level, image_url],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to add Product" });
+
         throw error;
       }
       response.status(201).send(`Product added`);
@@ -53,6 +57,8 @@ const updateProduct = (request, response) => {
     [name, description, price, stock_level, image_url, id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to update Product" });
+
         throw error;
       }
       response.status(200).send(`Product modified with ID : ${id}`);
@@ -67,6 +73,7 @@ const deleteProduct = (request, response) => {
     [id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to delete Product" });
         throw error;
       }
       response.status(200).send(`Product deleted with ID : ${id}`);

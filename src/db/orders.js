@@ -5,6 +5,7 @@ const getOrders = (request, response) => {
     `SELECT * FROM "order" ORDER BY order_id ASC`,
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to get orders" });
         throw error;
       }
       response.status(200).json(results.rows);
@@ -19,6 +20,7 @@ const getOrderById = (request, response) => {
     [id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to get order" });
         throw error;
       }
       response.status(200).json(results.rows);
@@ -50,6 +52,7 @@ const createOrder = async (request, response) => {
     response.status(201).send(`Order added`);
   } catch (e) {
     await client.query("ROLLBACK");
+    response.status(500).json({ msg: "Failed to add order" });
     throw e;
   } finally {
     client.release();
@@ -66,6 +69,7 @@ const updateOrder = (request, response) => {
     [order_date, status, tracking_number, id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to update order" });
         throw error;
       }
       response.status(200).send(`Order modified with ID : ${id}`);
@@ -80,6 +84,7 @@ const deleteOrder = (request, response) => {
     [id],
     (error, results) => {
       if (error) {
+        response.status(500).json({ msg: "Failed to delete order" });
         throw error;
       }
       response.status(200).send(`Order deleted with ID : ${id}`);
