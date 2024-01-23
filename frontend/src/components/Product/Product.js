@@ -1,15 +1,23 @@
+import { useLoaderData } from "react-router-dom";
 import "./Product.css";
 export const Product = ({ product }) => {
+  const load = useLoaderData();
+  let loadedProduct;
+  if (product) {
+    loadedProduct = product;
+  } else {
+    loadedProduct = load[0];
+  }
   return (
     <div id="card">
       <div>
-        <img src={product.image_url} />
+        <img src={loadedProduct.image_url} />
       </div>
       <div>
-        <p>{product.name}</p>
-        <p>{product.description}</p>
-        <p>£{product.price}</p>
-        <p>Units in Stock: {product.stock_level}</p>
+        <p>{loadedProduct.name}</p>
+        <p>{loadedProduct.description}</p>
+        <p>£{loadedProduct.price}</p>
+        <p>Units in Stock: {loadedProduct.stock_level}</p>
       </div>
     </div>
   );

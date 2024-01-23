@@ -22,19 +22,15 @@ const router = createBrowserRouter(
     <Route path="/login" element={<Login />} />,
     <Route
       path="/products/:productId"
-      element={
-        <Product
-          product={{
-            product_id: 1,
-            name: "Fish - Bones",
-            description:
-              "vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis",
-            price: "97.29",
-            stock_level: 9,
-            image_url: "http://dummyimage.com/169x100.png/dddddd/000000",
-          }}
-        />
-      }
+      element={<Product />}
+      loader={async ({ request, params }) => {
+       return fetch(
+          `http://localhost:4001/products/${params.productId}`,
+          {
+            signal: request.signal,
+          }
+        );
+      }}
     />,
     <Route path="/products" element={<ProductList />} />,
     <Route path="/orders" element={<h1>Hello Orders</h1>} />,

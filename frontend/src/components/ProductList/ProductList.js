@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Product } from "../Product/Product";
+import { Link } from "react-router-dom";
+import "./ProductList.css";
 
 export const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -7,7 +9,6 @@ export const ProductList = () => {
     await fetch("http://localhost:4001/products")
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         setProducts(response);
       });
 
@@ -18,7 +19,10 @@ export const ProductList = () => {
   return (
     <div>
       {products.map((product) => (
-        <Product product={product} key={product.product_id} />
+        <div key={product.product_id} className="card">
+          <Product product={product} />
+          <Link to={`/products/${product.product_id}`}>Go to product</Link>
+        </div>
       ))}
     </div>
   );
