@@ -12,14 +12,31 @@ import {
 
 import { Register } from "./components/Register/Register";
 import { Login } from "./components/Login/Login";
+import { Product } from "./components/Product/Product";
+import { ProductList } from "./components/ProductList/ProductList";
 
 const router = createBrowserRouter(
   createRoutesFromElements([
     <Route path="/" element={<App />} />,
     <Route path="/register" element={<Register />} />,
     <Route path="/login" element={<Login />} />,
-    <Route path="/products/:productId" element={<h1>Hello Product</h1>} />,
-    <Route path="/products" element={<h1>Hello Products</h1>} />,
+    <Route
+      path="/products/:productId"
+      element={
+        <Product
+          product={{
+            product_id: 1,
+            name: "Fish - Bones",
+            description:
+              "vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis",
+            price: "97.29",
+            stock_level: 9,
+            image_url: "http://dummyimage.com/169x100.png/dddddd/000000",
+          }}
+        />
+      }
+    />,
+    <Route path="/products" element={<ProductList />} />,
     <Route path="/orders" element={<h1>Hello Orders</h1>} />,
     <Route path="/orders/:orderId" element={<h1>Hello Orders</h1>} />,
   ])

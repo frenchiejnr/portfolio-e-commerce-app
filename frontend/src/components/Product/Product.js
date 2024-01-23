@@ -1,21 +1,15 @@
 import "./Product.css";
-export const Product = ({
-  productName,
-  productDescription,
-  productPrice,
-  productStockLevel,
-  productImageUrl,
-}) => {
+export const Product = ({ product }) => {
   return (
     <div id="card">
       <div>
-        <img src={productImageUrl} />
+        <img src={product.image_url} />
       </div>
       <div>
-        <p>{productName}</p>
-        <p>{productDescription}</p>
-        <p>£{productPrice}</p>
-        <p>Units in Stock: {productStockLevel}</p>
+        <p>{product.name}</p>
+        <p>{product.description}</p>
+        <p>£{product.price}</p>
+        <p>Units in Stock: {product.stock_level}</p>
       </div>
     </div>
   );
