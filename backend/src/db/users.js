@@ -1,60 +1,70 @@
 const { pool } = require("./index");
 
-const getUsers = (request, response) => {
-  pool.query(`SELECT * FROM "user" ORDER BY user_id ASC`, (error, results) => {
-    if (error) {
-      response.status(500);
-      throw error;
-    }
-    response.status(200).json(results.rows);
-  });
+const getUsers = async (request, response) => {
+  try {
+    await pool.query(
+      `SELECT * FROM "user" ORDER BY user_id ASC`,
+      (error, results) => {
+        console.log(`Fetched Users`);
+        response.status(200).json(results.rows);
+      }
+    );
+  } catch (error) {
+    console.error(`Fetching Users Failed`);
+    console.error(`${error}`);
+    response.status(500).json({ msg: "Fetching Users Failed" });
+  }
 };
 const getUserById = async (request, response) => {
   const id = parseInt(request.params.id);
-
-  pool.query(
-    `SELECT * FROM "user" WHERE user_id = $1`,
-    [id],
-    (error, results) => {
-      if (error) {
-        response.status(500);
-        throw error;
+  try {
+    await pool.query(
+      `SELECT * FROM "user" WHERE user_id = $1`,
+      [id],
+      (err, results) => {
+        console.log(`Fetched User ${id}`);
+        response.status(200).json(results.rows);
       }
-      response.status(200).json(results.rows);
-    }
-  );
+    );
+  } catch (error) {
+    console.error(`Fetching User Failed`);
+    console.error(`${error}`);
+    response.status(500).json({ msg: "Fetching User Failed" });
+  }
 };
-const createUser = (request, response) => {
+const createUser = async (request, response) => {
   const { username, password, email, address } = request.body;
 
-  pool.query(
-    `INSERT INTO "user" (username, password, email, address) VALUES ($1,$2,$3,$4)`,
-    [username, password, email, address],
-    (error, results) => {
-      if (error) {
-        response.status(500).json({ msg: "User Registration Failed" });
-        throw error;
-      }
-      response.status(201).send(`User added`);
-    }
-  );
+  try {
+    await pool.query(
+      `INSERT INTO "user" (username, password, email, address) VALUES ($1,$2,$3,$4)`,
+      [username, password, email, address]
+    );
+    console.log(`User added`);
+    response.status(201).json({ msg: `User added` });
+  } catch (error) {
+    console.error(`User Registration Failed`);
+    console.error(`${error}`);
+    response.status(500).json({ msg: "User Registration Failed" });
+  }
 };
 const updateUser = (request, response) => {
   // TODO: CHANGE A SINGLE FIELD
   const id = parseInt(request.params.id);
   const { username, password, email, address } = request.body;
-
-  pool.query(
-    `UPDATE "user" SET username = $1, password = $2, email = $3, address = $4 WHERE user_id = $5`,
-    [username, password, email, address, id],
-    (error, results) => {
-      if (error) {
-        response.status(500).json({ msg: "User Update Failed" });
-        throw error;
+  try {
+    pool.query(
+      `UPDATE "user" SET username = $1, password = $2, email = $3, address = $4 WHERE user_id = $5`,
+      [username, password, email, address, id],
+      (error, results) => {
+        if (error) {
+          response.status(500).json({ msg: "User Update Failed" });
+          throw error;
+        }
+        response.status(200).send(`User modified with ID : ${id}`);
       }
-      response.status(200).send(`User modified with ID : ${id}`);
-    }
-  );
+    );
+  } catch (error) {}
 };
 const deleteUser = (request, response) => {
   const id = parseInt(request.params.id);

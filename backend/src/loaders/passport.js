@@ -7,21 +7,16 @@ module.exports = (app) => {
   app.use(passport.session());
 
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    if (user.error) {
+      done(JSON.stringify(user));
+    } else {
+      console.log(user);
+      done(null, user.user_id);
+    }
   });
   passport.deserializeUser((id, done) => {
     done(null, { id });
   });
 
-  passport.use(
-    new LocalStrategy(async (username, password, done) => {
-      try {
-        const user = await login({ username, password });
-        return done(null, user);
-      } catch (err) {
-        return done(err);
-      }
-    })
-  );
   return passport;
 };
