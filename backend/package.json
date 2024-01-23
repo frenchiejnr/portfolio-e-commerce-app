@@ -4,6 +4,8 @@
   "description": "example e-commerce app for my portfolio",
   "main": "index.js",
   "scripts": {
+    "dev": "node src/index.js",
+    "debug": "nodemon --inspect src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "frenchiejnr",
