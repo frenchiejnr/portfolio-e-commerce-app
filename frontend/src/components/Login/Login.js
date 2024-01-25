@@ -1,23 +1,21 @@
 import { useState } from "react";
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 
 export function Login() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  const [password, setPassword] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(`logging in`);
     try {
-      await fetch("http://localhost:4001/auth/login", {
+      const res = await fetch("http://localhost:4001/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((response) => {
-          console.log(response);
-        });
+      });
+      if (res.url === "http://localhost:4001/") {
+        navigate("/");
+      }
     } catch (error) {
       console.error("Login error:", error);
     }
@@ -42,7 +40,6 @@ export function Login() {
             type="password"
             onChange={(e) => {
               setFormData({ ...formData, password: e.target.value });
-              setPassword(e.target.value);
             }}
             required
           ></input>

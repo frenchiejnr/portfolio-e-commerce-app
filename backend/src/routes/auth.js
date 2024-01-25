@@ -19,23 +19,17 @@ module.exports = (app, passport) => {
     }
   });
 
-  // Login Endpoint
-  authRouter.post("/login", async (req, res, next) => {
-    try {
-      const { username, password } = req.body;
-      const response = await auth.login({
-        username,
-        password,
-      });
-      if (response.error) {
-        console.log(response);
-        return res.status(401).json(response);
-      }
-      console.log(response);
-      res.status(200).json({ message: "Login successful!" });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Internal server error." });
-    }
+  authRouter.post(
+    "/login",
+    passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/login",
+    })
+  );
+
+  authRouter.delete("/logout", (req, res) => {
+    req.logOut();
+    res.redirect("/login");
+    console.log(`-------> User Logged out`);
   });
 };
