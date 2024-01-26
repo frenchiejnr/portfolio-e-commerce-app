@@ -1,8 +1,8 @@
-import "./Register.css";
+import "./RegisterPage.css";
 import React, { useEffect, useState } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
 
-export function Register() {
+export function RegisterPage() {
   const [formData, setFormData] = useState({});
   const [addressData, setAddressData] = useState({});
   const [formResponse, setFormResponse] = useState({ msg: "" });
