@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { publicRoutes } from "./public";
 import { ProtectedRoutes } from "./protected";
-import { HomePage } from "../components/HomePage/HomePage";
+import { HomePage } from "../pages/HomePage/HomePage";
 
 export const AppRoutes = () => {
   const commonRoutes = [{ path: "/", element: <HomePage /> }];

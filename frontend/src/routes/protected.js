@@ -1,6 +1,6 @@
 import { ProtectedRoute } from ".";
 import React from "react";
-import { Orders } from "../components/Orders/Orders";
+import { OrderPage } from "../pages/OrderPage/OrderPage";
 
 export const ProtectedRoutes = (user) => {
   return [
@@ -8,7 +8,7 @@ export const ProtectedRoutes = (user) => {
       path: "/",
       element: <ProtectedRoute user={user} />,
       children: [
-        { path: "/orders", element: <Orders /> },
+        { path: "/orders", element: <OrderPage /> },
         { path: "/orders/:orderId", element: <h1>Hello Orders</h1> },
       ],
     },

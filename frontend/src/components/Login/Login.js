@@ -17,6 +17,7 @@ export function Login() {
       });
       const userJson = await res.json();
       if (userJson.id) {
+        window.localStorage.setItem("isAuthenticated", true);
         dispatch(setUserId(userJson.id));
         navigate("/");
       }

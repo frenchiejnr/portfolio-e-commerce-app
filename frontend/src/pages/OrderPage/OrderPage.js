@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-export const Orders = () => {
+export const OrderPage = () => {
   const [orders, setOrders] = useState([]);
   const id = useSelector((state) => state.user.userId);
   const getOrders = async () => {

@@ -30,9 +30,12 @@ module.exports = (app, passport) => {
     }
   );
 
-  authRouter.delete("/logout", (req, res) => {
-    req.logOut();
-    res.redirect("/login");
+  authRouter.post("/logout", (req, res) => {
+    req.logOut((err) => {
+      if (err) {
+        return next(err);
+      }
+    });
     console.log(`-------> User Logged out`);
   });
 };
