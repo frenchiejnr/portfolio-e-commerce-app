@@ -1,13 +1,13 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { publicRoutes } from "./public";
 import { ProtectedRoutes } from "./protected";
+import { HomePage } from "../components/HomePage/HomePage";
 
 export const AppRoutes = () => {
-  const commonRoutes = [{ path: "/", element: <h1>HelloApp</h1> }];
+  const commonRoutes = [{ path: "/", element: <HomePage /> }];
   const authenticated = window.localStorage.getItem("isAuthenticated");
   const protectedRoutes = ProtectedRoutes(authenticated);
   const element = [...publicRoutes, ...commonRoutes, ...protectedRoutes];
-  console.log(element);
   return element;
 };
 
