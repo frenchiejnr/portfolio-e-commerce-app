@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { setUserId } from "../../store/userSlice";
 export function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  const [userId, setUserId] = useState();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -15,9 +16,8 @@ export function Login() {
         withCredentials: true,
       });
       const userJson = await res.json();
-      setUserId(userJson.id);
-      if (res.url === "http://localhost:4001/") {
-        window.localStorage.setItem("isAuthenticated", true);
+      if (userJson.id) {
+        dispatch(setUserId(userJson.id));
         navigate("/");
       }
     } catch (error) {

@@ -1,4 +1,3 @@
-import { Route } from "react-router-dom";
 import { ProtectedRoute } from ".";
 import React from "react";
 

@@ -1,7 +1,6 @@
 import { Login } from "../components/Login/Login";
 import { Product } from "../components/Product/Product";
 import { ProductList } from "../components/ProductList/ProductList";
-import { RegisterPage } from "../components/RegisterPage/RegisterPage";
 import { Register } from "./Register";
 export const publicRoutes = [
   { path: "/register", element: <Register /> },
