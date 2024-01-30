@@ -4,16 +4,20 @@ import { Form, useNavigate } from "react-router-dom";
 export function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
+  const [userId, setUserId] = useState();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`logging in`);
     try {
       const res = await fetch("http://localhost:4001/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        withCredentials: true,
       });
+      const userJson = await res.json();
+      setUserId(userJson.id);
       if (res.url === "http://localhost:4001/") {
+        window.localStorage.setItem("isAuthenticated", true);
         navigate("/");
       }
     } catch (error) {

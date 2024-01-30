@@ -16,6 +16,4 @@ export const publicRoutes = [
     },
   },
   { path: "/products", element: <ProductList /> },
-  { path: "/orders", element: <h1>Hello Orders</h1> },
-  { path: "/orders/:orderId", element: <h1>Hello Orders</h1> },
 ];

@@ -3,16 +3,24 @@ const { login } = require("../auth");
 const LocalStrategy = require("passport-local").Strategy;
 const users = require("../db/users");
 const { response } = require("express");
+const session = require("express-session");
 
 module.exports = (app) => {
+  app.use(
+    session({
+      secret: "keyboard cat",
+      resave: false,
+      saveUninitialized: false,
+      cookie: { maxAge: 24 * 60 * 60 * 1000, httpOnly: true },
+    })
+  );
+
   app.use(passport.initialize());
   app.use(passport.session());
 
   const authUser = async (username, password, done) => {
     try {
       const user = await users.findUserByUsername(username);
-      console.log(user);
-
       if (!user) {
         console.log(`{ error: "Incorrect username or password." }`);
         return done(null, false);
@@ -31,23 +39,11 @@ module.exports = (app) => {
   passport.serializeUser((userObj, done) => {
     done(null, userObj);
   });
-  passport.deserializeUser((userObj, done) => {
-    done(null, userObj);
+  passport.deserializeUser((id, done) => {
+    users.getUserById(id, (err, user) => {
+      done(err, user);
+    });
   });
-
-  checkAuthenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-    res.redirect("/login");
-  };
-
-  checkLoggedIn = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      return res.redirect("/dashboard");
-    }
-    next();
-  };
 
   return passport;
 };

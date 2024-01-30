@@ -1,9 +1,10 @@
 const express = require("express");
 const ordersRouter = express.Router();
 const db = require("../db/orders");
+const { forwardAuthenticated } = require("../auth");
 
 module.exports = (app) => {
-  app.use("/orders", ordersRouter);
+  app.use("/orders", forwardAuthenticated, ordersRouter);
 
   /**
    * @swagger

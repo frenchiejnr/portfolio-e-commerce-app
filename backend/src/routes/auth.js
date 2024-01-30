@@ -22,9 +22,12 @@ module.exports = (app, passport) => {
   authRouter.post(
     "/login",
     passport.authenticate("local", {
-      successRedirect: "/",
       failureRedirect: "/login",
-    })
+    }),
+    (req, res) => {
+      const userId = req.user.user_id;
+      res.json({ id: userId });
+    }
   );
 
   authRouter.delete("/logout", (req, res) => {

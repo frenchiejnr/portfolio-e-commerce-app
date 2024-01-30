@@ -8,6 +8,8 @@ export const Product = ({ product }) => {
   } else {
     loadedProduct = load[0];
   }
+
+  const handleClick = () => {};
   return (
     <div id="card">
       <div>
@@ -19,6 +21,7 @@ export const Product = ({ product }) => {
         <p>£{loadedProduct.price}</p>
         <p>Units in Stock: {loadedProduct.stock_level}</p>
       </div>
+      <button onClick={handleClick}>Add to cart</button>
     </div>
   );
 };
