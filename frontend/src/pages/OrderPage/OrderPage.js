@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export const OrderPage = () => {
   const [orders, setOrders] = useState([]);
@@ -21,7 +22,11 @@ export const OrderPage = () => {
         ? orders.length === 0
           ? "No Orders"
           : orders.map((order) => {
-              return <p key={order.order_id}>{order.order_id}</p>;
+              return (
+                <p key={order.order_id}>
+                  <Link to={`/orders/${order.order_id}`}>{order.order_id}</Link>
+                </p>
+              );
             })
         : "Invalid Id"}
     </div>
