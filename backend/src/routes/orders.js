@@ -140,4 +140,6 @@ module.exports = (app) => {
    *         description: "order Delete Failed"
    */
   ordersRouter.delete("/:id", db.deleteOrder);
+
+  ordersRouter.get("/:id/items", db.orderItems);
 };
