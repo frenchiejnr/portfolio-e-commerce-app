@@ -2,12 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import "./Product.css";
 export const Product = ({ product }) => {
   const load = useLoaderData();
-  let loadedProduct;
-  if (product) {
-    loadedProduct = product;
-  } else {
-    loadedProduct = load[0];
-  }
+  const loadedProduct = product ? product : load[0];
 
   const handleClick = () => {};
   return (

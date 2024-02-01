@@ -36,7 +36,7 @@ export function Login() {
               setFormData({ ...formData, username: e.target.value })
             }
             required
-          ></input>
+          />
         </div>
         <div>
           <label htmlFor="password">Password: </label>
@@ -47,7 +47,7 @@ export function Login() {
               setFormData({ ...formData, password: e.target.value });
             }}
             required
-          ></input>
+          />
           <div>
             <button type="submit">Login</button>
           </div>

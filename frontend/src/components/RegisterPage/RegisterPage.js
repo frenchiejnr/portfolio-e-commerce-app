@@ -35,7 +35,6 @@ export function RegisterPage() {
   }, [addressData]);
 
   useEffect(() => {
-    console.log(formResponse.msg);
     if (formResponse.msg === "User added") {
       navigate("/login");
     }
@@ -52,7 +51,7 @@ export function RegisterPage() {
               setFormData({ ...formData, username: e.target.value })
             }
             required
-          ></input>
+          />
         </div>
         <div>
           <label htmlFor="password">Password: </label>
@@ -66,7 +65,7 @@ export function RegisterPage() {
               setPasswordsMatch(newMatch);
             }}
             required
-          ></input>
+          />
         </div>
         <div>
           <label htmlFor="r-password">Repeat Password: </label>
@@ -79,15 +78,13 @@ export function RegisterPage() {
               setPasswordsMatch(newMatch);
             }}
             required
-          ></input>
-          {confirmPassword !== "" ? (
-            passwordsMatch ? (
-              <p>Passwords match!</p>
-            ) : (
-              <p>Passwords do not match.</p>
-            )
+          />
+          {confirmPassword === "" ? (
+            <p />
+          ) : passwordsMatch ? (
+            <p>Passwords match!</p>
           ) : (
-            <p></p>
+            <p>Passwords do not match.</p>
           )}
         </div>
         <div>
@@ -99,7 +96,7 @@ export function RegisterPage() {
               setFormData({ ...formData, email: e.target.value })
             }
             required
-          ></input>
+          />
         </div>
         <div>
           <label htmlFor="houseNumber">House Number:</label>
@@ -113,7 +110,7 @@ export function RegisterPage() {
               setAddressData({ ...addressData, houseNumber: e.target.value })
             }
             required
-          ></input>
+          />
 
           <label htmlFor="street">Street:</label>
           <input
@@ -126,7 +123,7 @@ export function RegisterPage() {
               setAddressData({ ...addressData, street: e.target.value })
             }
             required
-          ></input>
+          />
 
           <label htmlFor="town">Town:</label>
           <input
@@ -139,7 +136,7 @@ export function RegisterPage() {
               setAddressData({ ...addressData, town: e.target.value })
             }
             required
-          ></input>
+          />
 
           <label htmlFor="postcode">Postcode:</label>
           <input
@@ -152,7 +149,7 @@ export function RegisterPage() {
               setAddressData({ ...addressData, postcode: e.target.value })
             }
             required
-          ></input>
+          />
         </div>
         <div>
           <button type="submit" disabled={passwordsMatch ? false : true}>
