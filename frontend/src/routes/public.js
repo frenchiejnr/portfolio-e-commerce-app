@@ -1,9 +1,9 @@
 import { Login } from "../components/Login/Login";
 import { Product } from "../components/Product/Product";
-import { ProductList } from "../components/ProductList/ProductList";
-import { Register } from "./Register";
+import { ProductsPage } from "../pages/ProductsPage/ProductsPage";
+import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
 export const publicRoutes = [
-  { path: "/register", element: <Register /> },
+  { path: "/register", element: <RegisterPage /> },
   { path: "/login", element: <Login /> },
   {
     path: "/products/:productId",
@@ -14,5 +14,5 @@ export const publicRoutes = [
       });
     },
   },
-  { path: "/products", element: <ProductList /> },
+  { path: "/products", element: <ProductsPage /> },
 ];

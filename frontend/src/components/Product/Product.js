@@ -1,22 +1,20 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import "./Product.css";
+import { ProductDetails } from "../ProductDetails/ProductDetails";
 export const Product = ({ product }) => {
   const load = useLoaderData();
   const loadedProduct = product ? product : load[0];
 
   const handleClick = () => {};
   return (
-    <div id="card">
-      <div>
-        <img src={loadedProduct.image_url} />
+    <>
+      <div className="card">
+        <ProductDetails loadedProduct={loadedProduct} />
+        <button onClick={handleClick}>Add to cart</button>
       </div>
       <div>
-        <p>{loadedProduct.name}</p>
-        <p>{loadedProduct.description}</p>
-        <p>£{loadedProduct.price}</p>
-        <p>Units in Stock: {loadedProduct.stock_level}</p>
+        <Link to={"/products"}>All Products</Link>
       </div>
-      <button onClick={handleClick}>Add to cart</button>
-    </div>
+    </>
   );
 };

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Product } from "../Product/Product";
 import { Link } from "react-router-dom";
-import "./ProductList.css";
+import "./ProductsPage.css";
+import { ProductDetails } from "../../components/ProductDetails/ProductDetails";
 
-export const ProductList = () => {
+export const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const getProducts = async () =>
     await fetch("http://localhost:4001/products")
@@ -20,7 +20,7 @@ export const ProductList = () => {
     <div>
       {products.map((product) => (
         <div key={product.product_id} className="card">
-          <Product product={product} />
+          <ProductDetails loadedProduct={product} />
           <Link to={`/products/${product.product_id}`}>Go to product</Link>
         </div>
       ))}
