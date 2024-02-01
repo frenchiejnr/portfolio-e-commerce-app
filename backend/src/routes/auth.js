@@ -26,6 +26,11 @@ module.exports = (app, passport) => {
     }),
     (req, res) => {
       const userId = req.user.user_id;
+      res.cookie("auth_token", "authorised", {
+        httpOnly: false,
+        path: "/",
+        expires: new Date(Date.now() + 3_600_000),
+      });
       res.json({ id: userId });
     }
   );

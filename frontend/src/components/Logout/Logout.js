@@ -11,6 +11,7 @@ export const Logout = () => {
     fetch("http://localhost:4001/auth/logout", {
       method: "POST",
     });
+    document.cookie = "auth_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     dispatch(setUserId(null));
     navigate("/login");
   };

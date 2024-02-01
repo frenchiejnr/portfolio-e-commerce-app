@@ -14,6 +14,7 @@ export function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
         withCredentials: true,
+        credentials: "include",
       });
       const userJson = await res.json();
       if (userJson.id) {

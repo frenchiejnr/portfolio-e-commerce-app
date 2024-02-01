@@ -7,12 +7,13 @@ export const AppRoutes = () => {
   const commonRoutes = [{ path: "/", element: <HomePage /> }];
   const authenticated = window.localStorage.getItem("isAuthenticated");
   const protectedRoutes = ProtectedRoutes(authenticated);
-  const element = [...publicRoutes, ...commonRoutes, ...protectedRoutes];
-  return element;
+  return [...publicRoutes, ...commonRoutes, ...protectedRoutes];
 };
 
 export const ProtectedRoute = ({ user, redirectPath = "/login", children }) => {
-  if (!user) {
+  const cookies = document.cookie;
+  const authTokenMatch = cookies.match(/auth_token=(.*?)(;|$)/);
+  if (!authTokenMatch) {
     return <Navigate to={redirectPath} replace />;
   }
   return children ? children : <Outlet />;
