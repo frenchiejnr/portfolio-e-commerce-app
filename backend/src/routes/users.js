@@ -185,4 +185,5 @@ module.exports = (app) => {
    *         description: "Server Error"
    */
   userRouter.get("/:id/orders/:order_id", db.getUserOrder);
+  userRouter.get("/:id/cart", db.getUserCart);
 };

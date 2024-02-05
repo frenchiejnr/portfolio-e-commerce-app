@@ -137,6 +137,24 @@ const findUserByUsername = async (username) => {
   }
 };
 
+const getUserCart = async (request, response) => {
+  try {
+    const id = parseInt(request.params.id);
+    const statement = `SELECT * FROM user_cart WHERE user_id = $1`;
+    const values = [id];
+    const result = await pool.query(statement, values);
+    if (result.rows?.length) {
+      response.status(200).json(result.rows.slice(-1));
+      return;
+    }
+    response.status(404).json("No cart");
+  } catch (error) {
+    console.error(`Fetching Cart Failed`);
+    console.error(`${error}`);
+    response.status(500).json({ msg: "Fetching Cart Failed" });
+  }
+};
+
 module.exports = {
   getUsers,
   getUserById,
@@ -146,4 +164,5 @@ module.exports = {
   getUserOrders,
   getUserOrder,
   findUserByUsername,
+  getUserCart,
 };

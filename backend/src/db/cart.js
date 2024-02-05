@@ -1,28 +1,36 @@
 const { pool } = require("./index");
 
-const getCarts = (request, response) => {
-  pool.query(`SELECT * FROM cart ORDER BY cart_id ASC`, (error, results) => {
-    if (error) {
-      response.status(500).json({ msg: "Failed to get carts" });
-      throw error;
-    }
-    response.status(200).json(results.rows);
-  });
-};
-const getCartById = (request, response) => {
-  const id = parseInt(request.params.id);
-
-  pool.query(
-    `SELECT * FROM cart WHERE cart_id = $1`,
-    [id],
-    (error, results) => {
-      if (error) {
-        response.status(500).json({ msg: "Failed to get cart" });
-        throw error;
+const getCarts = async (request, response) => {
+  try {
+    await pool.query(
+      `SELECT * FROM cart ORDER BY cart_id ASC`,
+      (error, results) => {
+        console.log(`Fetched Carts`);
+        response.status(200).json(results.rows);
       }
-      response.status(200).json(results.rows);
-    }
-  );
+    );
+  } catch (error) {
+    console.error(`Fetching Carts Failed`);
+    console.error(`${error}`);
+    response.status(500).json({ msg: "Fetching Carts Failed" });
+  }
+};
+const getCartById = async (request, response) => {
+  const id = parseInt(request.params.id);
+  try {
+    await pool.query(
+      `SELECT * FROM cart WHERE cart_id = $1`,
+      [id],
+      (error, results) => {
+        console.log(`Fetched Cart ${id}`);
+        response.status(200).json(results.rows);
+      }
+    );
+  } catch (error) {
+    console.error(`Fetching Cart Failed`);
+    console.error(`${error}`);
+    response.status(500).json({ msg: "Fetching Cart Failed" });
+  }
 };
 
 const createCart = async (request, response) => {
