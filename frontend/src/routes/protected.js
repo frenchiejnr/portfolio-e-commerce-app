@@ -3,6 +3,7 @@ import React from "react";
 import { OrderPage } from "../pages/OrderPage/OrderPage";
 import store from "../store/store";
 import { Order } from "../components/Order/Order";
+import { CartPage } from "../pages/CartPage/CartPage";
 export const ProtectedRoutes = (user) => {
   return [
     {
@@ -30,6 +31,10 @@ export const ProtectedRoutes = (user) => {
               }
             );
           },
+        },
+        {
+          path: "/cart",
+          element: <CartPage />,
         },
       ],
     },

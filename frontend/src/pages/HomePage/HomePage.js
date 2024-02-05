@@ -10,6 +10,7 @@ export const HomePage = () => {
         <Link to={`/register`}>Register</Link>
         <Link to={`/orders`}>Orders</Link>
         <Link to={`/products`}>Products</Link>
+        <Link to={`/cart`}>Cart</Link>
       </div>
       <Logout />
     </>

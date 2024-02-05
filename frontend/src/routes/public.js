@@ -1,10 +1,10 @@
-import { Login } from "../components/Login/Login";
 import { Product } from "../components/Product/Product";
+import { LoginPage } from "../pages/LoginPage/LoginPage";
 import { ProductsPage } from "../pages/ProductsPage/ProductsPage";
 import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
 export const publicRoutes = [
   { path: "/register", element: <RegisterPage /> },
-  { path: "/login", element: <Login /> },
+  { path: "/login", element: <LoginPage /> },
   {
     path: "/products/:productId",
     element: <Product />,
