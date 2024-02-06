@@ -87,7 +87,7 @@ const getCartItems = async (request, response) => {
   try {
     const id = parseInt(request.params.id);
     const statement = `
-    SELECT quantity, added_at, price, name, image_url, p.product_id FROM cart_cartitem cci 
+    SELECT quantity, added_at, price, name, image_url, p.product_id, cci.cart_item_id FROM cart_cartitem cci 
     JOIN cart_item ci ON cci.cart_item_id = ci.cart_item_id
     JOIN product_cartitem pci ON ci.cart_item_id = pci.cart_item_id
     JOIN product p ON pci.product_id = p.product_id

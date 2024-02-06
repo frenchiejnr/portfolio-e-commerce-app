@@ -4,7 +4,7 @@ import { ProductDetails } from "../ProductDetails/ProductDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../utils/cart.utils";
 import { setCartId } from "../../store/cartSlice";
-import dayjs from "dayjs";
+import { manageProductInCart } from "../../utils/cartItem.utils";
 
 export const Product = ({ product }) => {
   const load = useLoaderData();
@@ -15,7 +15,7 @@ export const Product = ({ product }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleClick = async () => {
+  const handleAddToCart = async () => {
     if (userId === null) {
       navigate("/login");
       return;
@@ -25,22 +25,13 @@ export const Product = ({ product }) => {
       cartId = cartJson[0].cart_id;
       dispatch(setCartId(cartId));
     }
-    fetch("http://localhost:4001/cart-item", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        quantity: 1,
-        added_at: dayjs().toISOString(),
-        product_id: productId,
-        cart_id: cartId,
-      }),
-    });
+    manageProductInCart(cartId, productId);
   };
   return (
     <>
       <div className="card">
         <ProductDetails loadedProduct={loadedProduct} />
-        <button onClick={handleClick}>Add to cart</button>
+        <button onClick={handleAddToCart}>Add to cart</button>
       </div>
       <div>
         <Link to={"/products"}>All Products</Link>

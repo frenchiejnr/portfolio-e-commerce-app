@@ -36,7 +36,6 @@ const createCartItem = async (request, response) => {
     await client.query(`BEGIN`);
     const queryText = `INSERT INTO cart_item (quantity, added_at) VALUES ($1,$2) RETURNING cart_item_id`;
     const res = await client.query(queryText, [quantity, added_at]);
-    console.log(res.rows);
 
     const insertJoiningTableText = `INSERT INTO product_cartitem (product_id, cart_item_id) VALUES ($1, $2)`;
     await client.query(insertJoiningTableText, [
@@ -60,23 +59,21 @@ const createCartItem = async (request, response) => {
     client.release();
   }
 };
-const updateCartItem = (request, response) => {
-  // TODO: CHANGE A SINGLE FIELD
-  const id = parseInt(request.params.id);
-  const { quantity, added_at } = request.body;
-
-  pool.query(
-    `UPDATE cart_item SET quantity = $1, added_at = $2 WHERE cart_item_id = $3`,
-    [quantity, added_at, id],
-    (error, results) => {
-      if (error) {
-        response.status(500).json({ msg: "Failed to update cart_item" });
-
-        throw error;
-      }
+const updateCartItem = async (request, response) => {
+  try {
+    const id = parseInt(request.params.id);
+    const { field, value } = request.body;
+    const statement = `UPDATE cart_item SET ${field} = $1 WHERE cart_item_id = $2`;
+    const values = [value, id];
+    await pool.query(statement, values, (error, results) => {
       response.status(200).send(`CartItem modified with ID : ${id}`);
+    });
+  } catch (error) {
+    if (error) {
+      response.status(500).json({ msg: "Failed to update cart_item" });
+      throw error;
     }
-  );
+  }
 };
 const deleteCartItem = (request, response) => {
   const id = parseInt(request.params.id);
