@@ -10,7 +10,6 @@ export const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
       const res = await fetch("http://localhost:4001/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
