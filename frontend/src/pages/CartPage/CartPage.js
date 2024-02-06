@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../utils/cart.utils";
 import { setCartId } from "../../store/cartSlice";
+import { CartItem } from "../../components/CartItem/CartItem";
 
 export const CartPage = () => {
   const [thisCartId, setThisCartId] = useState(null);
@@ -43,7 +44,7 @@ export const CartPage = () => {
       <h1>{thisCartId}</h1>
       <div>
         {cartItems.map((item) => (
-          <p key={item.product_id}>{item.name}</p>
+          <CartItem item={item} key={item.product_id} />
         ))}
       </div>
     </div>
