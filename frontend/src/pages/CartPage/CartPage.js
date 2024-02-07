@@ -24,6 +24,15 @@ export const CartPage = () => {
     setCartItems(await res.json());
   };
 
+  const handleDelete = async (item) => {
+    await fetch(`http://localhost:4001/cart-item/${item.cart_item_id}`, {
+      method: "DELETE",
+    });
+    setCartItems((prevCartItems) =>
+      prevCartItems.filter((i) => i.cart_item_id !== item.cart_item_id)
+    );
+  };
+
   useEffect(() => {
     if (!initialized.current) {
       initialized.current = true;
@@ -44,7 +53,11 @@ export const CartPage = () => {
       <h1>{thisCartId}</h1>
       <div>
         {cartItems.map((item) => (
-          <CartItem item={item} key={item.product_id} />
+          <div>
+            {console.log(item)}
+            <CartItem item={item} key={item.product_id} />
+            <button onClick={() => handleDelete(item)}>x</button>
+          </div>
         ))}
       </div>
     </div>
