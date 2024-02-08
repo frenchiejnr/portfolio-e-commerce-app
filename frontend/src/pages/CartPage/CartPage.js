@@ -1,19 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../utils/cart.utils";
-import { setCartId } from "../../store/cartSlice";
+import { setCartId, setTotal } from "../../store/cartSlice";
 import { CartItem } from "../../components/CartItem/CartItem";
 import { useNavigate } from "react-router-dom";
 export const CartPage = () => {
   const [thisCartId, setThisCartId] = useState(null);
   const [cartItems, setCartItems] = useState([]);
-  const id = useSelector((state) => state.user.userId);
+  const userId = useSelector((state) => state.user.userId);
+  const cartTotal = useSelector((state) => state.cart.total);
   const initialized = useRef(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const fetchCartId = async () => {
-    const cartJson = await getCart(id);
+    const cartJson = await getCart(userId);
     setThisCartId(cartJson[0].cart_id);
     dispatch(setCartId(cartJson[0].cart_id));
   };
@@ -41,7 +42,7 @@ export const CartPage = () => {
   useEffect(() => {
     if (!initialized.current) {
       initialized.current = true;
-      if (id) {
+      if (userId) {
         fetchCartId();
       }
     }
@@ -52,6 +53,14 @@ export const CartPage = () => {
       fetchCartItems();
     }
   }, [thisCartId]);
+
+  useEffect(() => {
+    const total = cartItems.reduce(
+      (accumulator, item) => accumulator + item.quantity * item.price,
+      0
+    );
+    dispatch(setTotal(total * 100));
+  }, [cartItems]);
 
   return (
     <div>
@@ -64,7 +73,7 @@ export const CartPage = () => {
           </div>
         ))}
       </div>
-      <button onClick={handleCheckoutClick}>Checkout</button>
+      <button onClick={handleCheckoutClick}>Checkout £{cartTotal / 100}</button>
     </div>
   );
 };
