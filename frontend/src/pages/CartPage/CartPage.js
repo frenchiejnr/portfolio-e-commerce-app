@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../utils/cart.utils";
 import { setCartId } from "../../store/cartSlice";
 import { CartItem } from "../../components/CartItem/CartItem";
-
+import { useNavigate } from "react-router-dom";
 export const CartPage = () => {
   const [thisCartId, setThisCartId] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const id = useSelector((state) => state.user.userId);
   const initialized = useRef(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchCartId = async () => {
     const cartJson = await getCart(id);
@@ -33,6 +34,10 @@ export const CartPage = () => {
     );
   };
 
+  const handleCheckoutClick = () => {
+    navigate("/checkout");
+  };
+
   useEffect(() => {
     if (!initialized.current) {
       initialized.current = true;
@@ -54,12 +59,12 @@ export const CartPage = () => {
       <div>
         {cartItems.map((item) => (
           <div>
-            {console.log(item)}
             <CartItem item={item} key={item.product_id} />
             <button onClick={() => handleDelete(item)}>x</button>
           </div>
         ))}
       </div>
+      <button onClick={handleCheckoutClick}>Checkout</button>
     </div>
   );
 };

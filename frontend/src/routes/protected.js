@@ -5,6 +5,7 @@ import { Order } from "../components/Order/Order";
 import { CartPage } from "../pages/CartPage/CartPage";
 import { Navigate, Outlet } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
+import { CheckoutPage } from "../pages/CheckoutPage/CheckoutPage";
 
 export const ProtectedRoute = ({ user, redirectPath = "/login", children }) => {
   const cookies = document.cookie;
@@ -50,6 +51,10 @@ export const ProtectedRoutes = (user) => {
             {
               path: "/cart",
               element: <CartPage />,
+            },
+            {
+              path: "/checkout",
+              element: <CheckoutPage />,
             },
           ],
         },
