@@ -103,6 +103,21 @@ const getCartItems = async (request, response) => {
   }
 };
 
+const getCartCheckout = async (request, response) => {
+  try {
+    const id = parseInt(request.params.id);
+    const statement = `SELECT * FROM checkout_cart WHERE cart_id = $1`;
+    const values = [id];
+    await pool.query(statement, values, (error, results) => {
+      response.status(200).json(results.rows);
+    });
+  } catch (error) {
+    console.error(`Fetching CartItems Failed`);
+    console.error(`${error}`);
+    response.status(500);
+  }
+};
+
 module.exports = {
   getCarts,
   getCartById,
@@ -110,4 +125,5 @@ module.exports = {
   updateCart,
   deleteCart,
   getCartItems,
+  getCartCheckout,
 };

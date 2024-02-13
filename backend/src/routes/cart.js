@@ -127,4 +127,5 @@ module.exports = (app) => {
    */
   cartRouter.delete("/:id", db.deleteCart);
   cartRouter.get("/:id/cart-items", db.getCartItems);
+  cartRouter.get("/:id/completed", db.getCartCheckout);
 };
