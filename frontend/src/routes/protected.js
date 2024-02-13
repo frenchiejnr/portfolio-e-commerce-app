@@ -1,11 +1,12 @@
 import React from "react";
 import { OrderPage } from "../pages/OrderPage/OrderPage";
-import store from "../store/store";
+import { store } from "../store/store";
 import { Order } from "../components/Order/Order";
 import { CartPage } from "../pages/CartPage/CartPage";
 import { Navigate, Outlet } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import { CheckoutPage } from "../pages/CheckoutPage/CheckoutPage";
+import { ReturnPage } from "../pages/ReturnPage/ReturnPage";
 
 export const ProtectedRoute = ({ user, redirectPath = "/login", children }) => {
   const cookies = document.cookie;
@@ -55,6 +56,10 @@ export const ProtectedRoutes = (user) => {
             {
               path: "/checkout",
               element: <CheckoutPage />,
+            },
+            {
+              path: "/return",
+              element: <ReturnPage />,
             },
           ],
         },

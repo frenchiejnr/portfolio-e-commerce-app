@@ -30,7 +30,7 @@ const getCheckoutById = (request, response) => {
 };
 
 const createCheckout = async (request, response) => {
-  const { payment_method, shipping_address, total_amount, cart_id, order_id } =
+  const { payment_method, shipping_address, total_amount, cart_id } =
     request.body;
   const client = await pool.connect();
   try {
@@ -41,20 +41,13 @@ const createCheckout = async (request, response) => {
       shipping_address,
       total_amount,
     ]);
-    console.log(res.rows);
-
     const insertIntoCheckoutCart = `INSERT INTO checkout_cart (checkout_id, cart_id) VALUES ($1, $2)`;
     await client.query(insertIntoCheckoutCart, [
       res.rows[0].checkout_id,
       cart_id,
     ]);
-    const insertIntoCheckoutOrder = `INSERT INTO checkout_order (checkout_id, order_id) VALUES ($1, $2)`;
-    await client.query(insertIntoCheckoutOrder, [
-      res.rows[0].checkout_id,
-      order_id,
-    ]);
     await client.query("COMMIT");
-    response.status(201).send(`Checkout added`);
+    response.status(201).json(res.rows[0].checkout_id);
   } catch (e) {
     await client.query("ROLLBACK");
     response.status(500).json({ msg: "Failed to create checkout" });
@@ -95,6 +88,41 @@ const deleteCheckout = (request, response) => {
     }
   );
 };
+const stripeCreateCheckoutSession = (stripe) => {
+  return async (req, res) => {
+    const { price } = req.body;
+
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: "gbp",
+            product_data: {
+              name: "My Order",
+            },
+            unit_amount: price,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      ui_mode: "embedded",
+      return_url:
+        "http://localhost:3000/return?session_id={CHECKOUT_SESSION_ID}",
+    });
+    res.send({ clientSecret: session.client_secret });
+  };
+};
+const stripeGetSessionStatus = (stripe) => {
+  return async (req, res) => {
+    const session = await stripe.checkout.sessions.retrieve(
+      req.query.session_id
+    );
+    res.send({
+      status: session.status,
+    });
+  };
+};
 
 module.exports = {
   getCheckouts,
@@ -102,4 +130,6 @@ module.exports = {
   createCheckout,
   updateCheckout,
   deleteCheckout,
+  stripeCreateCheckoutSession,
+  stripeGetSessionStatus,
 };

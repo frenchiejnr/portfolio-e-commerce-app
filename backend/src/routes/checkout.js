@@ -138,4 +138,9 @@ module.exports = (app) => {
    *         description: "checkout Delete Failed"
    */
   checkoutRouter.delete("/:id", db.deleteCheckout);
+
+  const stripe = require("stripe")(`${process.env.STRIPE_CLIENT_SECRET}`);
+
+  app.post("/create-checkout-session", db.stripeCreateCheckoutSession(stripe));
+  app.get("/session-status", db.stripeGetSessionStatus(stripe));
 };

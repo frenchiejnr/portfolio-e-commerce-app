@@ -1,13 +1,12 @@
 import {
-  Elements,
   EmbeddedCheckoutProvider,
   EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISH_KEY);
+
 export const CheckoutPage = () => {
   const [clientSecret, setClientSecret] = useState("");
   const cartTotal = useSelector((state) => state.cart.total);

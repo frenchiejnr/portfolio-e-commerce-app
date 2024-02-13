@@ -64,7 +64,7 @@ export const CartPage = () => {
 
   return (
     <div>
-      <h1>{thisCartId}</h1>
+      <h1 key={thisCartId}>{thisCartId}</h1>
       <div>
         {cartItems.map((item) => (
           <div>
