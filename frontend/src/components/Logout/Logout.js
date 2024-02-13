@@ -16,5 +16,9 @@ export const Logout = () => {
     navigate("/login");
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return (
+    <button onClick={handleLogout} className="text-white hover:underline">
+      Logout
+    </button>
+  );
 };
