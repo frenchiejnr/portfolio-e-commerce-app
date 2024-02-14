@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import { Logout } from "../Logout/Logout";
 import { useSelector } from "react-redux";
 
-import "./Header.css";
-
 const Header = () => {
   const userId = useSelector((state) => state.user.userId);
   return (
