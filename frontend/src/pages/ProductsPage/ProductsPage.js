@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./ProductsPage.css";
 import { ProductDetails } from "../../components/ProductDetails/ProductDetails";
 
 export const ProductsPage = () => {
@@ -19,9 +18,10 @@ export const ProductsPage = () => {
   return (
     <div>
       {products.map((product) => (
-        <div key={product.product_id} className="card">
-          <ProductDetails loadedProduct={product} />
-          <Link to={`/products/${product.product_id}`}>Go to product</Link>
+        <div key={product.product_id} className="my-3">
+          <Link to={`/products/${product.product_id}`}>
+            <ProductDetails loadedProduct={product} />
+          </Link>
         </div>
       ))}
     </div>
