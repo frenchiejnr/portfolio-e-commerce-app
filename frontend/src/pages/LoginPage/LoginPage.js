@@ -7,14 +7,8 @@ export function LoginPage() {
   const id = useSelector((state) => state.user.userId);
   const navigate = useNavigate();
   return (
-    <div>
-      {id ? (
-        <Navigate to={"/"} />
-      ) : (
-        <div className="box">
-          <LoginForm />
-        </div>
-      )}
+    <div className="flex h-screen justify-center">
+      {id ? <Navigate to={"/"} /> : <LoginForm />}
     </div>
   );
 }
