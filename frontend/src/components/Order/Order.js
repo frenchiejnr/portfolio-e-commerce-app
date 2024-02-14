@@ -23,9 +23,7 @@ export const Order = () => {
   return (
     <>
       <OrderDetails order={order} />
-      <div>
-        <OrderItemsTable orderItems={orderItems} />
-      </div>
+      <OrderItemsTable orderItems={orderItems} />
     </>
   );
 };
