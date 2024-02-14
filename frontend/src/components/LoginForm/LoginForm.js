@@ -29,7 +29,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="mx-auto mt-10 h-80 max-w-xl rounded bg-white px-8 py-6 shadow-xl">
+    <div className="mx-auto mt-10 h-80 w-full max-w-xl rounded bg-white px-8 py-6 shadow-xl">
       <Form method="post" onSubmit={handleSubmit}>
         <div className="mb-6">
           <label htmlFor="username" className="block font-bold text-gray-800">
