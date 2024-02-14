@@ -1,5 +1,4 @@
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
-import "./Product.css";
 import { ProductDetails } from "../ProductDetails/ProductDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../utils/cart.utils";
@@ -28,14 +27,40 @@ export const Product = ({ product }) => {
     manageProductInCart(cartId, productId);
   };
   return (
-    <>
-      <div className="card">
-        <ProductDetails loadedProduct={loadedProduct} />
-        <button onClick={handleAddToCart}>Add to cart</button>
+    <div>
+      <Link
+        to={"/products"}
+        className="flex w-fit rounded-xl bg-indigo-700 py-px pr-2 text-indigo-100 shadow-md transition-colors duration-150 hover:bg-indigo-800 "
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="h-6 w-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+          />
+        </svg>
+        All Products
+      </Link>
+      <div className="flex h-screen items-center justify-center">
+        <div>
+          <div className="my-3">
+            <ProductDetails loadedProduct={loadedProduct} />
+          </div>
+          <button
+            onClick={handleAddToCart}
+            className="focus:shadow-outline mx-auto block h-12 w-full max-w-md overflow-hidden rounded-xl bg-indigo-700 px-6 text-indigo-100 shadow-md transition-colors duration-150 hover:bg-indigo-800 md:max-w-2xl md:shrink-0"
+          >
+            Add to cart
+          </button>
+        </div>
       </div>
-      <div>
-        <Link to={"/products"}>All Products</Link>
-      </div>
-    </>
+    </div>
   );
 };
