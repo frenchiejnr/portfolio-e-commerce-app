@@ -1,11 +1,11 @@
 export const CartItem = ({ item }) => {
   return (
-    <div className="mx-auto max-w-md overflow-hidden rounded-xl bg-white shadow-md md:max-w-2xl">
+    <div className="ml-auto mr-10 max-w-md overflow-hidden rounded-xl bg-white shadow-md md:max-w-2xl">
       <div className="items-center md:flex">
         <div className="md:shrink-0">
           <img
             src={item.image_url}
-            className="h48 aspect-square w-full object-cover md:h-full md:w-48"
+            className="aspect-square h-48 w-full object-cover md:h-full md:w-48"
           />
         </div>
         <div className="p-8">
