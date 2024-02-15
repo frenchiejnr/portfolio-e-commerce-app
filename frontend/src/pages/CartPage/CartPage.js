@@ -63,11 +63,11 @@ export const CartPage = () => {
   }, [cartItems]);
 
   return (
-    <div>
+    <div className="h-full">
       <h1 className="p-1 text-center text-xl font-semibold" key={thisCartId}>
         Cart: {thisCartId}
       </h1>
-      <div className="">
+      <div>
         {cartItems.map((item) => (
           <div className="my-3 flex">
             <div className="basis-11/12">
@@ -95,7 +95,9 @@ export const CartPage = () => {
       <div className="flex">
         <button
           onClick={handleCheckoutClick}
-          className="focus:shadow-outline ml-auto mr-10 h-12 w-full max-w-md basis-11/12 overflow-hidden rounded-xl bg-indigo-700 px-6 text-indigo-100 shadow-md transition-colors duration-150 hover:bg-indigo-800 md:max-w-2xl md:shrink-0"
+          className="focus:shadow-outline ml-auto mr-10 h-12 w-full max-w-md basis-11/12
+            overflow-hidden rounded-xl bg-indigo-700 px-6 text-indigo-100 shadow-md
+            transition-colors duration-150 hover:bg-indigo-800 md:max-w-2xl md:shrink-0"
         >
           <p className="text-xl">Checkout £{cartTotal / 100}</p>
         </button>

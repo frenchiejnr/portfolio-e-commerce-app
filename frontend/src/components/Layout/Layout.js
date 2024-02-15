@@ -3,11 +3,11 @@ import Header from "../Header/Header";
 
 const Layout = () => {
   return (
-    <div className="flex h-screen flex-col">
-      <div className="fixed left-0 top-0 z-50 w-full">
+    <div className="flex h-dvh flex-col">
+      <div className="sticky top-0 z-50 w-full">
         <Header />
       </div>
-      <div className="flex-grow-1 pt-[41px]">
+      <div className="min-h-0 flex-grow overflow-auto">
         <Outlet />
       </div>
     </div>

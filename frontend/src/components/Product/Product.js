@@ -27,10 +27,11 @@ export const Product = ({ product }) => {
     manageProductInCart(cartId, productId);
   };
   return (
-    <div>
+    <div className="h-full">
       <Link
         to={"/products"}
-        className="flex w-fit rounded-xl bg-indigo-700 py-px pr-2 text-indigo-100 shadow-md transition-colors duration-150 hover:bg-indigo-800 "
+        className="flex w-fit rounded-xl bg-indigo-700 py-px pr-2 text-indigo-100 shadow-md
+          transition-colors duration-150 hover:bg-indigo-800 fixed"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,14 +49,16 @@ export const Product = ({ product }) => {
         </svg>
         All Products
       </Link>
-      <div className="flex h-screen items-center justify-center">
+      <div className="flex min-h-full items-center justify-center">
         <div>
           <div className="my-3">
             <ProductDetails loadedProduct={loadedProduct} />
           </div>
           <button
             onClick={handleAddToCart}
-            className="focus:shadow-outline mx-auto block h-12 w-full max-w-md overflow-hidden rounded-xl bg-indigo-700 px-6 text-indigo-100 shadow-md transition-colors duration-150 hover:bg-indigo-800 md:max-w-2xl md:shrink-0"
+            className="focus:shadow-outline mx-auto block h-12 w-full max-w-md overflow-hidden
+              rounded-xl bg-indigo-700 px-6 text-indigo-100 shadow-md transition-colors
+              duration-150 hover:bg-indigo-800 md:max-w-2xl md:shrink-0"
           >
             Add to cart
           </button>

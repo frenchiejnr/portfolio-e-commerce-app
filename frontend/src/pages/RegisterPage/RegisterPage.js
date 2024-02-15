@@ -41,8 +41,8 @@ export function RegisterPage() {
   }, [formResponse]);
 
   return (
-    <div className="flex h-screen justify-center">
-      <div className="mx-auto mt-10 w-full max-w-xl rounded bg-white px-8 py-6 shadow-xl">
+    <div className="flex h-full justify-center">
+      <div className="mx-auto my-4 w-full max-w-xl rounded bg-white px-8 py-6 shadow-xl">
         <div className="mt-6 flex justify-end">
           <label htmlFor="login" className="mr-1 self-center">
             Meant to login?
@@ -197,7 +197,7 @@ export function RegisterPage() {
             <button
               type="submit"
               disabled={passwordsMatch ? false : true}
-              class="mt-6 block w-full cursor-pointer rounded bg-indigo-500 px-4 py-2 text-center font-bold text-white"
+              class=" block w-full cursor-pointer rounded bg-indigo-500 px-4 py-2 text-center font-bold text-white"
             >
               Register
             </button>
