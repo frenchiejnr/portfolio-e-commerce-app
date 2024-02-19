@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://frenchiejnr-ecommerce-vyfh.onrender.com",
+  "homepage": ".",
   "dependencies": {
     "@reduxjs/toolkit": "^2.1.0",
     "@stripe/react-stripe-js": "^2.4.0",
