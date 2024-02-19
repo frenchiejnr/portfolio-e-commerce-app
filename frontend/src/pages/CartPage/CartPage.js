@@ -98,7 +98,9 @@ export const CartPage = () => {
             overflow-hidden rounded-xl bg-indigo-700 px-6 text-indigo-100 shadow-md
             transition-colors duration-150 hover:bg-indigo-800 md:max-w-2xl md:shrink-0"
         >
-          <p className="text-xl">Checkout £{cartTotal / 100}</p>
+          <p className="text-xl">
+            Checkout £{parseFloat(cartTotal / 100).toFixed(2)}
+          </p>
         </button>
         <div className="basis-1/12"></div>
       </div>

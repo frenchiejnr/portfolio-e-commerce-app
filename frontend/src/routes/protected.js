@@ -11,8 +11,10 @@ import { API_URL } from "../config/index";
 
 export const ProtectedRoute = ({ user, redirectPath = "/login", children }) => {
   const cookies = document.cookie;
+  console.log(cookies);
   const authTokenMatch = cookies.match(/auth_token=(.*?)(;|$)/);
   if (!authTokenMatch) {
+    console.log(`No Matching Auth`);
     return <Navigate to={redirectPath} replace />;
   }
   return children ? children : <Outlet />;
