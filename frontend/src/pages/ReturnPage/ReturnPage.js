@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
+import { API_URL } from "../../config/index";
 
 export const ReturnPage = () => {
   const [status, setStatus] = useState(null);
@@ -16,7 +17,7 @@ export const ReturnPage = () => {
       const urlParams = new URLSearchParams(queryString);
       const sessionId = urlParams.get("session_id");
 
-      fetch(`http://localhost:4001/session-status?session_id=${sessionId}`)
+      fetch(`${API_URL}/session-status?session_id=${sessionId}`)
         .then((res) => res.json())
         .then((data) => setStatus(data.status));
     }
@@ -28,12 +29,12 @@ export const ReturnPage = () => {
     }
   }, [status]);
   const completeOrder = async () => {
-    const address = await fetch(`http://localhost:4001/users/${userId}`)
+    const address = await fetch(`${API_URL}/users/${userId}`)
       .then((res) => res.json())
       .then((res) => {
         return res[0].address;
       });
-    const checkout_id = await fetch(`http://localhost:4001/checkout`, {
+    const checkout_id = await fetch(`${API_URL}/checkout`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -60,7 +61,7 @@ export const ReturnPage = () => {
       return digits;
     };
 
-    const order_id = await fetch(`http://localhost:4001/orders`, {
+    const order_id = await fetch(`${API_URL}/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

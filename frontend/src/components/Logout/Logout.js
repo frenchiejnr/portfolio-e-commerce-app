@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { setUserId } from "../../store/userSlice";
 import { useDispatch } from "react-redux";
+import { API_URL } from "../../config/index";
 
 export const Logout = () => {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ export const Logout = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     window.localStorage.setItem("isAuthenticated", false);
-    fetch("http://localhost:4001/auth/logout", {
+    fetch(`${API_URL}/auth/logout`, {
       method: "POST",
     });
     document.cookie = "auth_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";

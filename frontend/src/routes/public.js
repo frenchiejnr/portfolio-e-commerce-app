@@ -3,6 +3,7 @@ import { Product } from "../components/Product/Product";
 import { LoginPage } from "../pages/LoginPage/LoginPage";
 import { ProductsPage } from "../pages/ProductsPage/ProductsPage";
 import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
+import { API_URL } from "../config/index";
 export const publicRoutes = [
   {
     path: "",
@@ -14,7 +15,7 @@ export const publicRoutes = [
         path: "/products/:productId",
         element: <Product />,
         loader: async ({ request, params }) => {
-          return fetch(`http://localhost:4001/products/${params.productId}`, {
+          return fetch(`${API_URL}/products/${params.productId}`, {
             signal: request.signal,
           });
         },

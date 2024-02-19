@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { API_URL } from "../../config/index";
 
 export const OrderPage = () => {
   const [orders, setOrders] = useState([]);
   const id = useSelector((state) => state.user.userId);
   const getOrders = async () => {
-    const res = await fetch(`http://localhost:4001/users/${id}/orders`);
+    const res = await fetch(`${API_URL}/users/${id}/orders`);
     const orderJson = await res.json();
     setOrders(orderJson);
   };

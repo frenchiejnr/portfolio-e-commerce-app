@@ -1,10 +1,11 @@
 import dayjs from "dayjs";
+import { API_URL } from "../config/index";
 
 export const manageProductInCart = async (cartId, productId) => {
-  const res = await fetch(`http://localhost:4001/cart/${cartId}/cart-items`);
+  const res = await fetch(`${API_URL}/cart/${cartId}/cart-items`);
   const cartProducts = await res.json();
   const foundProduct = cartProducts.find(
-    (object) => object[`product_id`] === productId
+    (object) => object[`product_id`] === productId,
   );
   if (foundProduct) {
     updateCartItemQuantity(foundProduct);
@@ -14,7 +15,7 @@ export const manageProductInCart = async (cartId, productId) => {
 };
 
 const createCartItem = (productId, cartId) => {
-  fetch("http://localhost:4001/cart-item", {
+  fetch(`${API_URL}/cart-item`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -26,7 +27,7 @@ const createCartItem = (productId, cartId) => {
   });
 };
 const updateCartItemQuantity = (foundProduct) => {
-  fetch(`http://localhost:4001/cart-item/${foundProduct.cart_item_id}`, {
+  fetch(`${API_URL}/cart-item/${foundProduct.cart_item_id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

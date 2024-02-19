@@ -1,6 +1,7 @@
 import "./RegisterPage.css";
 import React, { useEffect, useState } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
+import { API_URL } from "../../config/index";
 
 export function RegisterPage() {
   const [formData, setFormData] = useState({});
@@ -15,7 +16,7 @@ export function RegisterPage() {
     e.preventDefault();
 
     try {
-      await fetch("http://localhost:4001/users/", {
+      await fetch(`${API_URL}/users/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

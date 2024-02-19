@@ -4,6 +4,7 @@ import { getCart } from "../../utils/cart.utils";
 import { setCartId, setTotal } from "../../store/cartSlice";
 import { CartItem } from "../../components/CartItem/CartItem";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../config/index";
 export const CartPage = () => {
   const [thisCartId, setThisCartId] = useState(null);
   const [cartItems, setCartItems] = useState([]);
@@ -20,14 +21,12 @@ export const CartPage = () => {
   };
 
   const fetchCartItems = async () => {
-    const res = await fetch(
-      `http://localhost:4001/cart/${thisCartId}/cart-items`,
-    );
+    const res = await fetch(`${API_URL}/cart/${thisCartId}/cart-items`);
     setCartItems(await res.json());
   };
 
   const handleDelete = async (item) => {
-    await fetch(`http://localhost:4001/cart-item/${item.cart_item_id}`, {
+    await fetch(`${API_URL}/cart-item/${item.cart_item_id}`, {
       method: "DELETE",
     });
     setCartItems((prevCartItems) =>

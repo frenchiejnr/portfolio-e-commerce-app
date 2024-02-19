@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ProductDetails } from "../../components/ProductDetails/ProductDetails";
+import { API_URL } from "../../config/index";
 
 export const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const getProducts = async () =>
-    await fetch("http://localhost:4001/products")
+    await fetch(`${API_URL}/products`)
       .then((response) => response.json())
       .then((response) => {
         setProducts(response);

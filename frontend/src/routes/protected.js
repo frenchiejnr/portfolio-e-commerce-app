@@ -7,6 +7,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import { CheckoutPage } from "../pages/CheckoutPage/CheckoutPage";
 import { ReturnPage } from "../pages/ReturnPage/ReturnPage";
+import { API_URL } from "../config/index";
 
 export const ProtectedRoute = ({ user, redirectPath = "/login", children }) => {
   const cookies = document.cookie;
@@ -42,10 +43,10 @@ export const ProtectedRoutes = (user) => {
                   return new Response("Invalid order ID", { status: 400 });
                 }
                 return fetch(
-                  `http://localhost:4001/users/${userId}/orders/${params.orderId}`,
+                  `${API_URL}/users/${userId}/orders/${params.orderId}`,
                   {
                     signal: request.signal,
-                  }
+                  },
                 );
               },
             },

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Form, useNavigate } from "react-router-dom";
 import { setUserId } from "../../store/userSlice";
+import { API_URL } from "../../config/index";
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ export const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:4001/auth/login", {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { OrderItemsTable } from "../OrderItemsTable/OrderItemsTable";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
+import { API_URL } from "../../config/index";
 
 export const Order = () => {
   const [orderItems, setOrderItems] = useState([]);
@@ -9,7 +10,7 @@ export const Order = () => {
   const order = load[0];
   const id = order.order_id;
   const getOrderItems = async () => {
-    const res = await fetch(`http://localhost:4001/orders/${id}/items`);
+    const res = await fetch(`${API_URL}/orders/${id}/items`);
     const orderItemJson = await res.json();
     setOrderItems(orderItemJson);
   };

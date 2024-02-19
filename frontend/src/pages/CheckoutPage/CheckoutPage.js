@@ -5,6 +5,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { API_URL } from "../../config/index";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISH_KEY);
 
 export const CheckoutPage = () => {
@@ -12,7 +13,7 @@ export const CheckoutPage = () => {
   const cartTotal = useSelector((state) => state.cart.total);
   useEffect(() => {
     // Create a Checkout Session as soon as the page loads
-    fetch("http://localhost:4001/create-checkout-session", {
+    fetch(`${API_URL}/create-checkout-session`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
