@@ -4,6 +4,8 @@ import { LoginPage } from "../pages/LoginPage/LoginPage";
 import { ProductsPage } from "../pages/ProductsPage/ProductsPage";
 import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
 import { API_URL } from "../config/index";
+import { CartPage } from "../pages/CartPage/CartPage";
+
 export const publicRoutes = [
   {
     path: "",
