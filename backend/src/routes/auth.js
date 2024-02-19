@@ -26,6 +26,7 @@ module.exports = (app, passport) => {
     }),
     (req, res) => {
       const userId = req.user.user_id;
+      console.log(`Setting Auth Token`);
       res.cookie("auth_token", "authorised", {
         httpOnly: false,
         path: "/",
