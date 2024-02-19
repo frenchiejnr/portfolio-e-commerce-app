@@ -21,6 +21,10 @@ export const publicRoutes = [
         },
       },
       { path: "/products", element: <ProductsPage /> },
+      {
+        path: "/cart",
+        element: <CartPage />,
+      },
     ],
   },
 ];

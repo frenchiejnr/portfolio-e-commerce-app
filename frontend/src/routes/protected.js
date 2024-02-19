@@ -50,10 +50,7 @@ export const ProtectedRoutes = (user) => {
                 );
               },
             },
-            {
-              path: "/cart",
-              element: <CartPage />,
-            },
+
             {
               path: "/checkout",
               element: <CheckoutPage />,
