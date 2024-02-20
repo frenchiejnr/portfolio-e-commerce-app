@@ -1,8 +1,9 @@
 const express = require("express");
 const checkoutRouter = express.Router();
 const db = require("../db/checkout");
+const { verifyToken } = require("../middleware");
 module.exports = (app) => {
-  app.use("/checkout", checkoutRouter);
+  app.use("/checkout", verifyToken, checkoutRouter);
 
   /**
    * @swagger
@@ -141,6 +142,10 @@ module.exports = (app) => {
 
   const stripe = require("stripe")(`${process.env.STRIPE_CLIENT_SECRET}`);
 
-  app.post("/create-checkout-session", db.stripeCreateCheckoutSession(stripe));
-  app.get("/session-status", db.stripeGetSessionStatus(stripe));
+  app.post(
+    "/create-checkout-session",
+    verifyToken,
+    db.stripeCreateCheckoutSession(stripe)
+  );
+  app.get("/session-status", verifyToken, db.stripeGetSessionStatus(stripe));
 };

@@ -18,7 +18,11 @@ export const ReturnPage = () => {
       const urlParams = new URLSearchParams(queryString);
       const sessionId = urlParams.get("session_id");
 
-      fetch(`${API_URL}/session-status?session_id=${sessionId}`)
+      fetch(`${API_URL}/session-status?session_id=${sessionId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((res) => res.json())
         .then((data) => setStatus(data.status));
     }
@@ -37,7 +41,10 @@ export const ReturnPage = () => {
       });
     const checkout_id = await fetch(`${API_URL}/checkout`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         payment_method: "Stripe",
         shipping_address: address,
