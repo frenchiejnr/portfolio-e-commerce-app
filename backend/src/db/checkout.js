@@ -107,8 +107,7 @@ const stripeCreateCheckoutSession = (stripe) => {
       ],
       mode: "payment",
       ui_mode: "embedded",
-      return_url:
-        "http://localhost:3000/return?session_id={CHECKOUT_SESSION_ID}",
+      return_url: `${process.env.STRIPE_RETURN_URL}/return?session_id={CHECKOUT_SESSION_ID}`,
     });
     res.send({ clientSecret: session.client_secret });
   };
