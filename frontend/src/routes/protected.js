@@ -39,6 +39,7 @@ export const ProtectedRoutes = (user) => {
               element: <Order />,
               loader: async ({ request, params }) => {
                 const userId = store.getState().user.userId;
+
                 if (!userId) {
                   return new Response("Invalid user", {
                     status: 400,

@@ -6,8 +6,13 @@ import { API_URL } from "../../config/index";
 export const OrderPage = () => {
   const [orders, setOrders] = useState([]);
   const id = useSelector((state) => state.user.userId);
+  const token = window.localStorage.getItem("jwt_token");
   const getOrders = async () => {
-    const res = await fetch(`${API_URL}/users/${id}/orders`);
+    const res = await fetch(`${API_URL}/users/${id}/orders`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const orderJson = await res.json();
     setOrders(orderJson);
   };

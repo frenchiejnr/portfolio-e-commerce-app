@@ -9,8 +9,13 @@ export const Order = () => {
   const load = useLoaderData();
   const order = load[0];
   const id = order.order_id;
+  const token = window.localStorage.getItem("jwt_token");
   const getOrderItems = async () => {
-    const res = await fetch(`${API_URL}/orders/${id}/items`);
+    const res = await fetch(`${API_URL}/orders/${id}/items`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const orderItemJson = await res.json();
     setOrderItems(orderItemJson);
   };

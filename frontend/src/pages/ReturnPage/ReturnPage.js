@@ -9,6 +9,7 @@ export const ReturnPage = () => {
   const cartId = useSelector((state) => state.cart.cartId);
   const cartTotal = useSelector((state) => state.cart.total);
   const userId = useSelector((state) => state.user.userId);
+  const token = window.localStorage.getItem("jwt_token");
   const initialized = useRef(false);
   useEffect(() => {
     if (!initialized.current) {
@@ -63,7 +64,10 @@ export const ReturnPage = () => {
 
     const order_id = await fetch(`${API_URL}/orders`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         order_date: dayjs().toISOString(),
         status: "processing",

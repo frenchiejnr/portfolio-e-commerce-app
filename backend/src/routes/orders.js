@@ -2,9 +2,10 @@ const express = require("express");
 const ordersRouter = express.Router();
 const db = require("../db/orders");
 const { forwardAuthenticated } = require("../auth");
+const { verifyToken } = require("../middleware");
 
 module.exports = (app) => {
-  app.use("/orders", forwardAuthenticated, ordersRouter);
+  app.use("/orders", verifyToken, ordersRouter);
 
   /**
    * @swagger
