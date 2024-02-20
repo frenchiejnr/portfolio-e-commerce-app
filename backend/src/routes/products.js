@@ -1,6 +1,7 @@
 const express = require("express");
 const productRouter = express.Router();
 const db = require("../db/products");
+const { verifyToken } = require("../middleware");
 
 module.exports = (app) => {
   app.use("/products", productRouter);
@@ -76,7 +77,7 @@ module.exports = (app) => {
    *       500:
    *         description: "Failed to add Product"
    */
-  productRouter.post("/", db.createProduct);
+  productRouter.post("/", verifyToken, db.createProduct);
   /**
    * @swagger
    * "/products/{id}":
@@ -118,7 +119,7 @@ module.exports = (app) => {
    *       500:
    *         description: "Product Update Failed"
    */
-  productRouter.put("/:id", db.updateProduct);
+  productRouter.put("/:id", verifyToken, db.updateProduct);
   /**
    * @swagger
    * "/products/{id}":
@@ -139,5 +140,5 @@ module.exports = (app) => {
    *       500:
    *         description: "Product Delete Failed"
    */
-  productRouter.delete("/:id", db.deleteProduct);
+  productRouter.delete("/:id", verifyToken, db.deleteProduct);
 };
