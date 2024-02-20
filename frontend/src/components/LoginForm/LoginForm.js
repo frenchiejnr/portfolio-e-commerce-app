@@ -19,8 +19,6 @@ export const LoginForm = () => {
         credentials: "include",
       });
       const { id, token } = await res.json();
-      console.log(id);
-      console.log(token);
       if (id) {
         window.localStorage.setItem("jwt_token", token);
         window.localStorage.setItem("isAuthenticated", true);

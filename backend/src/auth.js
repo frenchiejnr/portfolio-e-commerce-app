@@ -14,7 +14,6 @@ const register = async (data) => {
 };
 const login = async (data) => {
   const { username, password } = data;
-  console.log(data);
   try {
     const user = await users.findUserByUsername(username);
     if (!user) {
