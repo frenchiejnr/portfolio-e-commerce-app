@@ -1,8 +1,9 @@
 const express = require("express");
 const cartItemRouter = express.Router();
 const db = require("../db/cart-items");
+const { verifyToken } = require("../middleware");
 module.exports = (app) => {
-  app.use("/cart-item", cartItemRouter);
+  app.use("/cart-item", verifyToken, cartItemRouter);
   /**
    * @swagger
    * "/cart-item/":

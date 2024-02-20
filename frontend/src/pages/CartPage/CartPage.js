@@ -10,6 +10,7 @@ export const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const userId = useSelector((state) => state.user.userId);
   const cartTotal = useSelector((state) => state.cart.total);
+  const token = window.localStorage.getItem("jwt_token");
   const initialized = useRef(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,6 +29,9 @@ export const CartPage = () => {
   const handleDelete = async (item) => {
     await fetch(`${API_URL}/cart-item/${item.cart_item_id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     setCartItems((prevCartItems) =>
       prevCartItems.filter((i) => i.cart_item_id !== item.cart_item_id),

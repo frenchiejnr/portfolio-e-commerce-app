@@ -15,9 +15,14 @@ export const manageProductInCart = async (cartId, productId) => {
 };
 
 const createCartItem = (productId, cartId) => {
+  const token = window.localStorage.getItem("jwt_token");
   fetch(`${API_URL}/cart-item`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({
       quantity: 1,
       added_at: dayjs().toISOString(),
@@ -27,9 +32,13 @@ const createCartItem = (productId, cartId) => {
   });
 };
 const updateCartItemQuantity = (foundProduct) => {
+  const token = window.localStorage.getItem("jwt_token");
   fetch(`${API_URL}/cart-item/${foundProduct.cart_item_id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({
       field: "quantity",
       value: Number(foundProduct.quantity) + 1,
