@@ -39,6 +39,7 @@ export const ProtectedRoutes = (user) => {
               element: <Order />,
               loader: async ({ request, params }) => {
                 const userId = store.getState().user.userId;
+                const token = window.localStorage.getItem("jwt_token");
 
                 if (!userId) {
                   return new Response("Invalid user", {
@@ -51,6 +52,9 @@ export const ProtectedRoutes = (user) => {
                 return fetch(
                   `${API_URL}/users/${userId}/orders/${params.orderId}`,
                   {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
                     signal: request.signal,
                   },
                 );

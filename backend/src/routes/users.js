@@ -1,6 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
 const db = require("../db/users");
+const { verifyToken } = require("../middleware");
 
 module.exports = (app) => {
   app.use("/users", userRouter);
@@ -19,7 +20,7 @@ module.exports = (app) => {
    *       500:
    *         description: "Server Error"
    */
-  userRouter.get("/", db.getUsers);
+  userRouter.get("/", verifyToken, db.getUsers);
   /**
    * @swagger
    * "/users/{id}":
@@ -40,7 +41,7 @@ module.exports = (app) => {
    *       500:
    *         description: "Server Error"
    */
-  userRouter.get("/:id", db.getUserById);
+  userRouter.get("/:id", verifyToken, db.getUserById);
   /**
    * @swagger
    * "/users/":
@@ -115,7 +116,7 @@ module.exports = (app) => {
    *       500:
    *         description: "User Update Failed"
    */
-  userRouter.put("/:id", db.updateUser);
+  userRouter.put("/:id", verifyToken, db.updateUser);
   /**
    * @swagger
    * "/users/{id}":
@@ -136,7 +137,7 @@ module.exports = (app) => {
    *       500:
    *         description: "User Delete Failed"
    */
-  userRouter.delete("/:id", db.deleteUser);
+  userRouter.delete("/:id", verifyToken, db.deleteUser);
   /**
    * @swagger
    * "/users/{id}/orders":
@@ -157,7 +158,7 @@ module.exports = (app) => {
    *       500:
    *         description: "Server Error"
    */
-  userRouter.get("/:id/orders", db.getUserOrders);
+  userRouter.get("/:id/orders", verifyToken, db.getUserOrders);
   /**
    * @swagger
    * "/users/{id}/orders/{orderid}":
@@ -184,6 +185,6 @@ module.exports = (app) => {
    *       500:
    *         description: "Server Error"
    */
-  userRouter.get("/:id/orders/:order_id", db.getUserOrder);
-  userRouter.get("/:id/cart", db.getUserCart);
+  userRouter.get("/:id/orders/:order_id", verifyToken, db.getUserOrder);
+  userRouter.get("/:id/cart", verifyToken, db.getUserCart);
 };

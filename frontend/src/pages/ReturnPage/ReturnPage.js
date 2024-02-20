@@ -34,7 +34,11 @@ export const ReturnPage = () => {
     }
   }, [status]);
   const completeOrder = async () => {
-    const address = await fetch(`${API_URL}/users/${userId}`)
+    const address = await fetch(`${API_URL}/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
         return res[0].address;

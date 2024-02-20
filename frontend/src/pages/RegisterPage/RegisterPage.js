@@ -13,12 +13,14 @@ export function RegisterPage() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    const token = window.localStorage.getItem("jwt_token");
     e.preventDefault();
-
     try {
       await fetch(`${API_URL}/users/`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       })
         .then((response) => {

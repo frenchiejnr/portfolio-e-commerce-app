@@ -2,13 +2,21 @@ import dayjs from "dayjs";
 import { API_URL } from "../config/index";
 export const getCart = async (id) => {
   const token = window.localStorage.getItem("jwt_token");
-  let res = await fetch(`${API_URL}/users/${id}/cart`);
+  let res = await fetch(`${API_URL}/users/${id}/cart`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   let cartId = await res.json();
 
   // If cart doesn't exist
   if (res.status === 404) {
     await createCart(id);
-    res = await fetch(`${API_URL}/users/${id}/cart`);
+    res = await fetch(`${API_URL}/users/${id}/cart`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     cartId = await res.json();
   }
 
@@ -24,7 +32,11 @@ export const getCart = async (id) => {
   const isCompleted = await completed.json();
   if (isCompleted.length > 0) {
     await createCart(id);
-    res = await fetch(`${API_URL}/users/${id}/cart`);
+    res = await fetch(`${API_URL}/users/${id}/cart`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     cartId = await res.json();
   }
 
