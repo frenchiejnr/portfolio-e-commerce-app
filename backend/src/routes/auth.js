@@ -2,6 +2,7 @@ const express = require("express");
 const authRouter = express.Router();
 const auth = require("../auth");
 const jwt = require("jsonwebtoken");
+const { verifyToken } = require("../middleware");
 
 // Instantiate Services
 
@@ -35,7 +36,7 @@ module.exports = (app, passport) => {
     }
   );
 
-  authRouter.post("/logout", (req, res) => {
+  authRouter.post("/logout", verifyToken, (req, res) => {
     req.logOut((err) => {
       if (err) {
         return next(err);

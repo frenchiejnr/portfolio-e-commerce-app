@@ -6,12 +6,17 @@ import { API_URL } from "../../config/index";
 export const Logout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleLogout = (e) => {
+    const token = window.localStorage.getItem("jwt_token");
     e.preventDefault();
     window.localStorage.setItem("isAuthenticated", false);
     window.localStorage.removeItem("jwt_token");
     fetch(`${API_URL}/auth/logout`, {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     dispatch(setUserId(null));
     navigate("/login");
