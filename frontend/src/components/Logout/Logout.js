@@ -9,7 +9,7 @@ export const Logout = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     window.localStorage.setItem("isAuthenticated", false);
-    windown.localStorage.removeItem("jwt_token");
+    window.localStorage.removeItem("jwt_token");
     fetch(`${API_URL}/auth/logout`, {
       method: "POST",
     });
