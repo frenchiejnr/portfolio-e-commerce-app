@@ -18,10 +18,13 @@ export const LoginForm = () => {
         withCredentials: true,
         credentials: "include",
       });
-      const userJson = await res.json();
-      if (userJson.id) {
+      const { id, token } = await res.json();
+      console.log(id);
+      console.log(token);
+      if (id) {
+        window.localStorage.setItem("jwt_token", token);
         window.localStorage.setItem("isAuthenticated", true);
-        dispatch(setUserId(userJson.id));
+        dispatch(setUserId(id));
         navigate("/");
       }
     } catch (error) {

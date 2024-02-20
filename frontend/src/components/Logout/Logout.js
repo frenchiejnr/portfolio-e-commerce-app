@@ -9,10 +9,10 @@ export const Logout = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     window.localStorage.setItem("isAuthenticated", false);
+    windown.localStorage.removeItem("jwt_token");
     fetch(`${API_URL}/auth/logout`, {
       method: "POST",
     });
-    document.cookie = "auth_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     dispatch(setUserId(null));
     navigate("/login");
   };

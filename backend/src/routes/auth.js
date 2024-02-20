@@ -1,6 +1,7 @@
 const express = require("express");
 const authRouter = express.Router();
 const auth = require("../auth");
+const jwt = require("jsonwebtoken");
 
 // Instantiate Services
 
@@ -26,13 +27,11 @@ module.exports = (app, passport) => {
     }),
     (req, res) => {
       const userId = req.user.user_id;
-      console.log(`Setting Auth Token`);
-      res.cookie("auth_token", "authorised", {
-        httpOnly: false,
-        path: "/",
-        expires: new Date(Date.now() + 3_600_000),
+      const payload = { userId };
+      const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
+        expiresIn: "1h",
       });
-      res.json({ id: userId });
+      res.json({ id: userId, token });
     }
   );
 
@@ -44,4 +43,20 @@ module.exports = (app, passport) => {
     });
     console.log(`-------> User Logged out`);
   });
+
+  const verrifyToken = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const token = authHeader.split(" ")[1];
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: "Invalid token" });
+      }
+
+      req.user = decoded; // Make decoded user data available in subsequent middleware
+      next();
+    });
+  };
 };

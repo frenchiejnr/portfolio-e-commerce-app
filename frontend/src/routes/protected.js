@@ -8,16 +8,19 @@ import Layout from "../components/Layout/Layout";
 import { CheckoutPage } from "../pages/CheckoutPage/CheckoutPage";
 import { ReturnPage } from "../pages/ReturnPage/ReturnPage";
 import { API_URL } from "../config/index";
-
+import { jwtDecode } from "jwt-decode";
+import { getToken } from "../utils/auth.utils";
 export const ProtectedRoute = ({ user, redirectPath = "/login", children }) => {
-  const cookies = document.cookie;
-  console.log(cookies);
-  const authTokenMatch = cookies.match(/auth_token=(.*?)(;|$)/);
-  if (!authTokenMatch) {
-    console.log(`No Matching Auth`);
+  const token = getToken();
+  if (!token) {
     return <Navigate to={redirectPath} replace />;
   }
-  return children ? children : <Outlet />;
+  try {
+    const decoded = jwtDecode(token, process.env.REACT_APP_JWT_SECRET_KEY);
+    return children ? children : <Outlet />;
+  } catch (error) {
+    return <Navigate to="/login" replace />;
+  }
 };
 
 export const ProtectedRoutes = (user) => {
@@ -52,7 +55,10 @@ export const ProtectedRoutes = (user) => {
                 );
               },
             },
-
+            {
+              path: "/cart",
+              element: <CartPage />,
+            },
             {
               path: "/checkout",
               element: <CheckoutPage />,
