@@ -2,7 +2,12 @@ import dayjs from "dayjs";
 import { API_URL } from "../config/index";
 
 export const manageProductInCart = async (cartId, productId) => {
-  const res = await fetch(`${API_URL}/cart/${cartId}/cart-items`);
+  const token = window.localStorage.getItem("jwt_token");
+  const res = await fetch(`${API_URL}/cart/${cartId}/cart-items`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const cartProducts = await res.json();
   const foundProduct = cartProducts.find(
     (object) => object[`product_id`] === productId,

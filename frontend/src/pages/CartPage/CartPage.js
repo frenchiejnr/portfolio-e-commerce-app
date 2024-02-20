@@ -22,7 +22,12 @@ export const CartPage = () => {
   };
 
   const fetchCartItems = async () => {
-    const res = await fetch(`${API_URL}/cart/${thisCartId}/cart-items`);
+    const token = window.localStorage.getItem("jwt_token");
+    const res = await fetch(`${API_URL}/cart/${thisCartId}/cart-items`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setCartItems(await res.json());
   };
 

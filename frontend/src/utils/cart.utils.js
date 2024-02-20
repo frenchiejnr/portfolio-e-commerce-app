@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { API_URL } from "../config/index";
 export const getCart = async (id) => {
+  const token = window.localStorage.getItem("jwt_token");
   let res = await fetch(`${API_URL}/users/${id}/cart`);
   let cartId = await res.json();
 
@@ -14,6 +15,11 @@ export const getCart = async (id) => {
   // If cart has been completed
   const completed = await fetch(
     `${API_URL}/cart/${cartId[0].cart_id}/completed`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
   );
   const isCompleted = await completed.json();
   if (isCompleted.length > 0) {
@@ -27,9 +33,13 @@ export const getCart = async (id) => {
 
 export const createCart = async (id) => {
   const currentISOTimestamp = dayjs().toISOString();
+  const token = window.localStorage.getItem("jwt_token");
   await fetch(`${API_URL}/cart`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({
       user_id: id,
       created_at: currentISOTimestamp,
