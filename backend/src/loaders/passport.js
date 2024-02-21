@@ -4,6 +4,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const users = require("../db/users");
 const { response } = require("express");
 const session = require("express-session");
+const { pool } = require("../db");
 
 module.exports = (app) => {
   app.use(
@@ -39,10 +40,18 @@ module.exports = (app) => {
   passport.serializeUser((userObj, done) => {
     done(null, userObj);
   });
+
   passport.deserializeUser((id, done) => {
-    users.getUserById(id, (err, user) => {
-      done(err, user);
-    });
+    pool.query(
+      `SELECT * FROM "user" WHERE user_id = $1`,
+      [id.user_id],
+      (err, user) => {
+        if (err) {
+          return done(err);
+        }
+        return done(null, user);
+      }
+    );
   });
 
   return passport;
